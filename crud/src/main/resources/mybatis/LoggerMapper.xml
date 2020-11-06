@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yxt.crud.mapper.ILoggerMapper">
+
+	<select id="selectLogger" parameterType="java.util.Map" resultType="com.yxt.crud.bean.LoggerPojo">
+		select
+		logger_id			as loggerId,
+		request_no			as requestNo,
+		request_md5			as requestMd5,
+		request_time		as requestTime,
+		request_params		as requestParams,
+		response_time		as responseTime,
+		response_params		as responseParams,
+		rtt					as rtt
+		from logger
+		where 1 = 1
+		<if test="loggerId != null" >and logger_id = #{loggerId,jdbcType=BIGINT}</if>
+		<if test="requestNo != null" >and request_no = #{requestNo,jdbcType=BIGINT}</if>
+		<if test="requestMd5 != null" >and request_md5 = #{requestMd5,jdbcType=BIGINT}</if>
+	</select>
+
+	<select id="hasRequestNo" parameterType="java.lang.Long" resultType="java.lang.Integer">
+		select 1 from logger where request_no = #{requestNo,jdbcType=BIGINT} limit 0, 1
+	</select>
+
+	<insert id="insertLogger" parameterType="com.yxt.crud.bean.LoggerPojo">
+		insert into logger
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="loggerId != null" >logger_id,</if>
+			<if test="requestNo != null" >request_no,</if>
+			<if test="requestMd5 != null" >request_md5,</if>
+			<if test="requestTime != null" >request_time,</if>
+			<if test="requestParams != null" >request_params,</if>
+			<if test="responseTime != null" >response_time,</if>
+			<if test="responseParams != null" >response_params,</if>
+			<if test="rtt != null" >rtt,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="loggerId != null" >#{loggerId,jdbcType=BIGINT},</if>
+			<if test="requestNo != null" >#{requestNo,jdbcType=BIGINT},</if>
+			<if test="requestMd5 != null" >#{requestMd5,jdbcType=VARCHAR},</if>
+			<if test="requestTime != null" >#{requestTime,jdbcType=TIMESTAMP},</if>
+			<if test="requestParams != null" >#{requestParams,jdbcType=VARCHAR},</if>
+			<if test="responseTime != null" >#{responseTime,jdbcType=TIMESTAMP},</if>
+			<if test="responseParams != null" >#{responseParams,jdbcType=VARCHAR},</if>
+			<if test="rtt != null" >#{rtt,jdbcType=BIGINT},</if>
+		</trim>
+	</insert>
+
+	<insert id="insertLoggerBatch" parameterType="java.util.List">
+		insert into logger
+		(
+			logger_id,
+			request_no,
+			request_md5,
+			request_time,
+			request_params,
+			response_time,
+			response_params,
+			rtt
+		)
+		values
+		<foreach collection="list" item="item" index="index" separator=",">
+		(
+			#{loggerId,jdbcType=BIGINT},
+			#{requestNo,jdbcType=BIGINT},
+			#{requestMd5,jdbcType=VARCHAR},
+			#{requestTime,jdbcType=TIMESTAMP},
+			#{requestParams,jdbcType=VARCHAR},
+			#{responseTime,jdbcType=TIMESTAMP},
+			#{responseParams,jdbcType=VARCHAR},
+			#{rtt,jdbcType=BIGINT}
+		)
+		</foreach>
+	</insert>
+
+	<update id="updateLogger" parameterType="com.yxt.crud.bean.LoggerPojo">
+		update logger
+		<set>
+			<if test="requestNo != null" >request_no=#{requestNo,jdbcType=BIGINT},</if>
+			<if test="requestMd5 != null" >request_md5=#{requestMd5,jdbcType=VARCHAR},</if>
+			<if test="requestTime != null" >request_time=#{requestTime,jdbcType=TIMESTAMP},</if>
+			<if test="requestParams != null" >request_params=#{requestParams,jdbcType=VARCHAR},</if>
+			<if test="responseTime != null" >response_time=#{responseTime,jdbcType=TIMESTAMP},</if>
+			<if test="responseParams != null" >response_params=#{responseParams,jdbcType=VARCHAR},</if>
+			<if test="rtt != null" >rtt=#{rtt,jdbcType=BIGINT},</if>
+		</set>
+		where
+		logger_id=#{loggerId,jdbcType=BIGINT}
+	</update>
+
+	<update id="updateLoggerBatch" parameterType="java.util.List">
+		update logger
+		<trim prefix="set" suffixOverrides=",">
+			<trim prefix="request_no = case"  suffix="end,">
+				<foreach collection="list" item="item" index="index">
+					<if test="item.requestNo != null">
+						when logger_id=#{item.loggerId} then #{item.requestNo,jdbcType=BIGINT}
+					</if>
+				</foreach>
+			</trim>
+			<trim prefix="request_md5 = case"  suffix="end,">
+				<foreach collection="list" item="item" index="index">
+					<if test="item.requestMd5 != null">
+						when logger_id=#{item.loggerId} then #{item.requestMd5,jdbcType=VARCHAR}
+					</if>
+				</foreach>
+			</trim>
+			<trim prefix="request_time = case"  suffix="end,">
+				<foreach collection="list" item="item" index="index">
+					<if test="item.requestTime != null">
+						when logger_id=#{item.loggerId} then #{item.requestTime,jdbcType=TIMESTAMP}
+					</if>
+				</foreach>
+			</trim>
+			<trim prefix="request_params = case"  suffix="end,">
+				<foreach collection="list" item="item" index="index">
+					<if test="item.requestParams != null">
+						when logger_id=#{item.loggerId} then #{item.requestParams,jdbcType=VARCHAR}
+					</if>
+				</foreach>
+			</trim>
+			<trim prefix="response_time = case"  suffix="end,">
+				<foreach collection="list" item="item" index="index">
+					<if test="item.responseTime != null">
+						when logger_id=#{item.loggerId} then #{item.responseTime,jdbcType=TIMESTAMP}
+					</if>
+				</foreach>
+			</trim>
+			<trim prefix="response_params = case"  suffix="end,">
+				<foreach collection="list" item="item" index="index">
+					<if test="item.responseParams != null">
+						when logger_id=#{item.loggerId} then #{item.responseParams,jdbcType=VARCHAR}
+					</if>
+				</foreach>
+			</trim>
+			<trim prefix="rtt = case"  suffix="end,">
+				<foreach collection="list" item="item" index="index">
+					<if test="item.rtt != null">
+						when logger_id=#{item.loggerId} then #{item.rtt,jdbcType=BIGINT}
+					</if>
+				</foreach>
+			</trim>
+		</trim>
+		where
+		<foreach collection="list" separator="or" item="item" index="index" >
+			logger_id=#{item.loggerId}
+		</foreach>
+	</update>
+
+</mapper>
+
