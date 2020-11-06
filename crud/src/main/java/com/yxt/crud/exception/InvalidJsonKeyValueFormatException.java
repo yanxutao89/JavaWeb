@@ -7,7 +7,6 @@ package com.yxt.crud.exception;
  */
 public class InvalidJsonKeyValueFormatException extends JsonException {
 
-
 	private static final long serialVersionUID = -5773267584310362898L;
 	
 	public InvalidJsonKeyValueFormatException(String message) {

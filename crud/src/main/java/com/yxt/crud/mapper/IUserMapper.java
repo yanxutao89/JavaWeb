@@ -10,7 +10,7 @@ import java.util.Map;
  * @Desc:
  * @Date: 2020/11/05 15:40
  */
-public interface IUserMapper {
+public interface IUserMapper extends IBaseMapper {
 
 	List<Map> selectUsers(Map queryMap);
 

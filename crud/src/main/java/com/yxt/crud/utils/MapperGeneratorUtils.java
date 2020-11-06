@@ -31,14 +31,14 @@ public class MapperGeneratorUtils {
 
     private static final String HEADER_CONTENT = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
             "<!DOCTYPE mapper PUBLIC \"-//mybatis.org//DTD Mapper 3.0//EN\" \"http://mybatis.org/dtd/mybatis-3-mapper.dtd\">";
-    private static final String FILENAME = "UserMapper";
-    private static final String ENTITY = "User";
+    private static final String ENTITY = "KeyValue";
+    private static final String FILENAME = ENTITY + "Mapper";
     private static final String NAMESPACE = "com.yxt.crud.mapper." + FILENAME;
     private static final String ENTITY_TYPE = "com.yxt.curd.bean." + ENTITY;
     private static final String URL = "jdbc:mysql://127.0.0.1:3306/java_web?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "yxt123";
-    private static final String TABLE_NAME = "user";
+    private static final String TABLE_NAME = "key_value";
 	private static final List<List<String>> ENTITY_FIELDS = new ArrayList<>();
 
     public static void main(String[] args){
@@ -207,9 +207,15 @@ public class MapperGeneratorUtils {
     private String generateSelect(List<List<String>> columnList) {
 
         StringBuffer sb = new StringBuffer("\t<select id=\"select" + ENTITY + "\" parameterType=\"java.util.Map\" resultMap=\"BaseResultMap\">\n");
-        sb.append("\t\tselect\n")
-            .append("\t\t<include refid=\"BaseColumnList\" />\n")
-            .append("\t\tfrom " + TABLE_NAME + "\n")
+        sb.append("\t\tselect\n");
+        for (int i = 0; i < columnList.size(); i++) {
+            if (i == columnList.size() - 1) {
+                sb.append("\t\t" + columnList.get(i).get(0) + "\n");
+            } else {
+                sb.append("\t\t" + columnList.get(i).get(0) + ",\n");
+            }
+        }
+        sb.append("\t\tfrom " + TABLE_NAME + "\n")
             .append("\t\twhere 1 = 1\n")
             .append("\t\t" + toColumnIf( columnList.get(0).get(0), "and " +  columnList.get(0).get(0) + " = ", "", columnList.get(0).get(1)).replace("},,", "}") + "\n")
             .append("\t</select>");
@@ -282,23 +288,29 @@ public class MapperGeneratorUtils {
         StringBuffer sb = new StringBuffer("\t<insert id=\"insert" + ENTITY + "Batch\" parameterType=\"java.util.List\">\n" +
                 "\t\tinsert into " + TABLE_NAME + "\n");
 
-        sb.append("\t\t\t(\n");
-        sb.append("\t\t\t\t<include refid=\"BaseColumnList\" />\n");
-        sb.append("\t\t\t)\n");
+        sb.append("\t\t(\n");
+        for (int i = 0; i < columnList.size(); i++) {
+            if (i == columnList.size() - 1) {
+                sb.append("\t\t\t" + columnList.get(i).get(0) + "\n");
+            } else {
+                sb.append("\t\t\t" + columnList.get(i).get(0) + ",\n");
+            }
+        }
+        sb.append("\t\t)\n");
         sb.append("\t\tvalues\n");
         sb.append("\t\t<foreach collection=\"list\" item=\"item\" index=\"index\" separator=\",\">\n");
-        sb.append("\t\t\t(\n");
+        sb.append("\t\t(\n");
 
         for (int i = 0; i < columnList.size(); i++) {
             String value = columnToValue(columnList.get(i).get(0), columnList.get(i).get(1));
             if (i == columnList.size() - 1) {
-                sb.append("\t\t\t\t" + value.replace("},", "}") + "\n");
+                sb.append("\t\t\t" + value.replace("},", "}") + "\n");
             }else {
-                sb.append("\t\t\t\t" + value + "\n");
+                sb.append("\t\t\t" + value + "\n");
             }
         }
 
-        sb.append("\t\t\t)\n");
+        sb.append("\t\t)\n");
         sb.append("\t\t</foreach>\n");
         sb.append("\t</insert>");
 

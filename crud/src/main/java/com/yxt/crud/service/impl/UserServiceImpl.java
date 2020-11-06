@@ -5,12 +5,11 @@ import com.yxt.crud.bean.UserPojo;
 import com.yxt.crud.json.JsonObject;
 import com.yxt.crud.mapper.IUserMapper;
 import com.yxt.crud.service.IUserService;
-import com.yxt.crud.utils.IdUtils;
+import com.yxt.crud.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -30,7 +29,7 @@ public class UserServiceImpl implements IUserService {
 		Result result = new Result();
 
 		JsonObject jsonObject = (JsonObject) JsonObject.parseObject(jsonStr);
-		Map queryMap = jsonObject.toJavaObject(jsonStr, Map.class);
+		Map queryMap = jsonObject;
 
 		result.setCode(200);
 		result.setMsg("获取成功");
@@ -47,7 +46,7 @@ public class UserServiceImpl implements IUserService {
 
 		JsonObject jsonObject = (JsonObject) JsonObject.parseObject(jsonStr);
 		UserPojo userPojo = jsonObject.toJavaObject(jsonStr, UserPojo.class);
-		userPojo.setUserId(IdUtils.nextId());
+		userPojo.setUserId(Utils.nextId());
 		userPojo.setCreateTime(new Date());
 
 		result.setCode(200);
