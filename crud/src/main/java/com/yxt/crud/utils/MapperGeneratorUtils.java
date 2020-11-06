@@ -54,7 +54,6 @@ public class MapperGeneratorUtils {
         String nameSpace = new StringBuffer("<mapper namespace=\"" + NAMESPACE + "\">").toString();
         list.add(nameSpace);
         System.out.println("nameSpace is done");
-        System.out.println("nameSpace is done");
 
         // resultMap
         String resultMap = mapperGenerator.generateBaseResultMap(columnList);
@@ -154,7 +153,6 @@ public class MapperGeneratorUtils {
 				field.add(1, columnClassName.substring(columnClassName.lastIndexOf(".") + 1));
 				ENTITY_FIELDS.add(field);
 			}
-			// 关闭资源
 			conn.close();
 			rs.close();
 			statement.close();
@@ -165,6 +163,7 @@ public class MapperGeneratorUtils {
 		}
 
 		return columns;
+
 	}
 
     private String generateBaseResultMap(List<List<String>> columnList) {
@@ -184,6 +183,7 @@ public class MapperGeneratorUtils {
         sb.append("\t</resultMap>");
 
         return sb.toString();
+
     }
 
     private String generateBaseColumnList(List<List<String>> columnList) {
@@ -191,7 +191,6 @@ public class MapperGeneratorUtils {
         StringBuffer sb = new StringBuffer("\t<sql id=\"BaseColumnList\">\n");
 
         for (int i = 0; i < columnList.size(); i++) {
-
             if (i == columnList.size() - 1) {
                 sb.append("\t\t" + columnList.get(i).get(0) + "\n");
             } else {
@@ -202,6 +201,7 @@ public class MapperGeneratorUtils {
         sb.append("\t</sql>");
 
         return sb.toString();
+
     }
 
     private String generateSelect(List<List<String>> columnList) {
@@ -215,6 +215,7 @@ public class MapperGeneratorUtils {
             .append("\t</select>");
 
         return sb.toString();
+
     }
 
     private String generateInsert(List<List<String>> columnList) {
@@ -224,12 +225,9 @@ public class MapperGeneratorUtils {
                 "\t\t(\n");
 
         for (int i = 0; i < columnList.size(); i++) {
-
             if (i == columnList.size() - 1) {
-
                 sb.append("\t\t\t" + columnList.get(i).get(0) + "\n");
             } else {
-
                 sb.append("\t\t\t" + columnList.get(i).get(0) + ",\n");
             }
         }
@@ -242,18 +240,16 @@ public class MapperGeneratorUtils {
 
             String value = columnToValue(columnList.get(i).get(0), columnList.get(i).get(1));
             if (i == columnList.size() - 1) {
-
                 sb.append("\t\t\t" + value.replace("},", "}") + "\n");
             } else {
-
                 sb.append("\t\t\t" + value + "\n");
             }
         }
 
-        sb.append("\t\t" + ")" + "\n")
-            .append("\t</insert>");
+        sb.append("\t\t" + ")" + "\n").append("\t</insert>");
 
         return sb.toString();
+
     }
 
     private String generateInsertSelective(List<List<String>> columnList) {
@@ -263,7 +259,6 @@ public class MapperGeneratorUtils {
                 "\t\t<trim prefix=\"(\" suffix=\")\" suffixOverrides=\",\" >\n");
 
         for (int i = 0; i < columnList.size(); i++) {
-
             sb.append("\t\t\t" + toColumnIf(columnList.get(i).get(0), columnList.get(i).get(1)) + "\n");
         }
 
@@ -272,15 +267,14 @@ public class MapperGeneratorUtils {
         sb.append("\t\t<trim prefix=\"values (\" suffix=\")\" suffixOverrides=\",\" >\n");
 
         for (int i = 0; i < columnList.size(); i++) {
-
             sb.append("\t\t\t" + toValueIf(columnList.get(i).get(0), columnList.get(i).get(1)) + "\n");
-
         }
 
         sb.append("\t\t</trim>\n");
         sb.append("\t</insert>");
 
         return sb.toString();
+
     }
 
     private String generateInsertBatch(List<List<String>> columnList) {
@@ -296,14 +290,10 @@ public class MapperGeneratorUtils {
         sb.append("\t\t\t(\n");
 
         for (int i = 0; i < columnList.size(); i++) {
-
             String value = columnToValue(columnList.get(i).get(0), columnList.get(i).get(1));
-
             if (i == columnList.size() - 1) {
-
                 sb.append("\t\t\t\t" + value.replace("},", "}") + "\n");
             }else {
-
                 sb.append("\t\t\t\t" + value + "\n");
             }
         }
@@ -313,6 +303,7 @@ public class MapperGeneratorUtils {
         sb.append("\t</insert>");
 
         return sb.toString();
+
     }
 
     private String generateUpdate(List<List<String>> columnList) {
@@ -322,19 +313,15 @@ public class MapperGeneratorUtils {
                 "\t\tset\n");
 
         for (int i = 0; i < columnList.size(); i++) {
-
             if (i == 0) {
-
                 continue;
             }
             sb.append("\t\t\t" + columnList.get(i).get(0) + "=");
             String value = columnToValue(columnList.get(i).get(0), columnList.get(i).get(1));
 
             if (i == columnList.size() - 1) {
-
                 sb.append(value.replace("},", "}") + "\n");
             } else {
-
                 sb.append(value + "\n");
             }
         }
@@ -344,6 +331,7 @@ public class MapperGeneratorUtils {
         sb.append("\t</update>");
 
         return sb.toString();
+
     }
 
     private String generateUpdateSelective(List<List<String>> columnList) {
@@ -352,11 +340,9 @@ public class MapperGeneratorUtils {
                 "\t\tupdate " + TABLE_NAME + "\n" +
                 "\t\t<set>\n");
         for (int i = 0; i < columnList.size(); i++) {
-
             if (i == 0) {
                 continue;
             }
-
             sb.append("\t\t\t" + toColumnIf(columnList.get(i).get(0), "", columnToValue(columnList.get(i).get(0), "=", columnList.get(i).get(1)), columnList.get(i).get(1)).replace(",,", ",").replace("#{=", "=#{") + "\n");
         }
 
@@ -366,6 +352,7 @@ public class MapperGeneratorUtils {
         sb.append("\t</update>");
 
         return sb.toString();
+
     }
 
     private String generateUpdateBatch(List<List<String>> columnList, String id) {
@@ -389,6 +376,7 @@ public class MapperGeneratorUtils {
         sb.append("\t</update>");
 
         return sb.toString();
+
     }
 
     private String generateUpdateBatchSelective(List<List<String>> columnList, String id) {
@@ -400,7 +388,6 @@ public class MapperGeneratorUtils {
     	for (int i = 0; i < columnList.size(); i++) {
 
     		if (i == 0) {
-
     			continue;
     		}
 
@@ -417,6 +404,7 @@ public class MapperGeneratorUtils {
     	sb.append("\t</update>");
 
     	return sb.toString();
+
     }
 
     private void generateEntity(){
@@ -447,10 +435,9 @@ public class MapperGeneratorUtils {
         int count = 0;
 
         for (int i =0; i < str.length(); i++) {
-
             char ch = str.charAt(i);
             if (ch == '_') {
-                sb.append("").append(Character.toUpperCase(str.charAt(i + 1)));
+                sb.append(Character.toUpperCase(str.charAt(i + 1)));
                 count++;
             } else {
                 if (count == 1) {
@@ -463,10 +450,10 @@ public class MapperGeneratorUtils {
         }
 
         return sb.toString();
+
     }
 
     private String columnToValue(String str, String type) {
-
         return columnToValue(str, "", type);
     }
 
@@ -478,12 +465,13 @@ public class MapperGeneratorUtils {
         sb.append(",jdbcType=" + type + "},");
 
         return sb.toString();
+
     }
 
     private String toColumnIf(String str, String type) {
-
         return toColumnIf(str, "", "", type);
     }
+
     private String toColumnIf(String str, String prefix, String suffix, String type) {
 
         StringBuffer sb = new StringBuffer("<if test=\"");
@@ -492,10 +480,8 @@ public class MapperGeneratorUtils {
 
         sb.append(" != null\" >");
         if (!prefix.equals("")) {
-
             sb.append(prefix + columnToValue(str, type));
         } else {
-
             sb.append(prefix + str + suffix);
         }
         sb.append(",</if>");
@@ -505,7 +491,6 @@ public class MapperGeneratorUtils {
     }
 
     private String toValueIf(String str, String type) {
-
         return toValueIf(str, "", type);
     }
 
@@ -529,7 +514,6 @@ public class MapperGeneratorUtils {
         sb.append("<foreach collection=\"list\" item=\"item\" index=\"index\"\n");
 
         if (!open.endsWith("(")) {
-
             open = open + "=case " + id;
         }
 
@@ -538,6 +522,7 @@ public class MapperGeneratorUtils {
         sb.append("\t\t</foreach>\n");
 
         return sb.toString();
+
     }
 
     private String toForeachO2OIf(String str, String type, String id, String separator, String open, String close) {
@@ -546,16 +531,17 @@ public class MapperGeneratorUtils {
     	sb.append("<foreach collection=\"list\" item=\"item\" index=\"index\">\n");
 
     	if (!open.endsWith("(")) {
-
     		open = open + "=case " + id;
     	}
 
-    	sb.append("\t\t\t\t\t<if test=\"" + underScore2Camel("item." + str)  + " !=null\">\n");
+    	sb.append("\t\t\t\t\t<if test=\"" + underScore2Camel("item." + str)  + " != null\">\n");
     	String columnToValue = columnToValue(str, "item.", type);
     	sb.append("\t\t\t\t\t\twhen " + id + "=" + underScore2Camel("#{item." + id) + "} then " + columnToValue.substring(0, columnToValue.length() - 1) + "\n");
     	sb.append("\t\t\t\t\t</if>\n");
     	sb.append("\t\t\t\t</foreach>\n");
 
     	return sb.toString();
+
     }
+
 }
