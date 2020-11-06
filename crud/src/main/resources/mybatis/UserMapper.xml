@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yxt.crud.mapper.IUserMapper">
+
+	<select id="selectUsers" parameterType="java.util.Map" resultType="java.util.Map">
+		select
+		u.user_id					userId,
+		u.user_name					userName,
+		u.password					password,
+		u.status					status,
+		u.create_time				createTime,
+		u.update_time				updateTime
+		from user					u
+		where u.status > 0
+		<if test="userId != null" >and u.user_id = #{userId,jdbcType=BIGINT}</if>
+	</select>
+
+	<insert id="insertUser">
+		insert into user
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="userId != null" >user_id,</if>
+			<if test="userName != null" >user_name,</if>
+			<if test="password != null" >password,</if>
+			<if test="status != null" >status,</if>
+			<if test="createTime != null" >create_time,</if>
+			<if test="updateTime != null" >update_time,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="userId != null" >#{userId,jdbcType=BIGINT},</if>
+			<if test="userName != null" >#{userName,jdbcType=VARCHAR},</if>
+			<if test="password != null" >#{password,jdbcType=VARCHAR},</if>
+			<if test="status != null" >#{status,jdbcType=INTEGER},</if>
+			<if test="createTime != null" >#{createTime,jdbcType=TIMESTAMP},</if>
+			<if test="updateTime != null" >#{updateTime,jdbcType=TIMESTAMP},</if>
+		</trim>
+	</insert>
+
+	<insert id="insertUserBatch" parameterType="java.util.List">
+		insert into user
+			(
+				user_id,
+				user_name,
+				password,
+				status,
+				create_time,
+				update_time
+			)
+		values
+		<foreach collection="list" item="item" index="index" separator=",">
+			(
+				#{userId,jdbcType=BIGINT},
+				#{userName,jdbcType=VARCHAR},
+				#{password,jdbcType=VARCHAR},
+				#{status,jdbcType=INTEGER},
+				#{createTime,jdbcType=TIMESTAMP},
+				#{updateTime,jdbcType=TIMESTAMP}
+			)
+		</foreach>
+	</insert>
+
+	<update id="updateUser" parameterType="com.yxt.crud.bean.UserPojo">
+		update user
+		<set>
+			<if test="userName != null" >user_name=#{userName,jdbcType=VARCHAR},</if>
+			<if test="password != null" >password=#{password,jdbcType=VARCHAR},</if>
+			<if test="status != null" >status=#{status,jdbcType=INTEGER},</if>
+			<if test="createTime != null" >create_time=#{createTime,jdbcType=TIMESTAMP},</if>
+			<if test="updateTime != null" >update_time=#{updateTime,jdbcType=TIMESTAMP},</if>
+		</set>
+		where
+		user_id=#{userId,jdbcType=BIGINT}
+	</update>
+
+	<update id="updateUserBatch" parameterType="java.util.List">
+		update user
+		<trim prefix="set" suffixOverrides=",">
+			<trim prefix="user_name = case"  suffix="end,">
+				<foreach collection="list" item="item" index="index">
+					<if test="item.userName !=null">
+						when user_id=#{item.userId} then #{item.userName,jdbcType=VARCHAR}
+					</if>
+				</foreach>
+			</trim>
+			<trim prefix="password = case"  suffix="end,">
+				<foreach collection="list" item="item" index="index">
+					<if test="item.password !=null">
+						when user_id=#{item.userId} then #{item.password,jdbcType=VARCHAR}
+					</if>
+				</foreach>
+			</trim>
+			<trim prefix="status = case"  suffix="end,">
+				<foreach collection="list" item="item" index="index">
+					<if test="item.status !=null">
+						when user_id=#{item.userId} then #{item.status,jdbcType=INTEGER}
+					</if>
+				</foreach>
+			</trim>
+			<trim prefix="create_time = case"  suffix="end,">
+				<foreach collection="list" item="item" index="index">
+					<if test="item.createTime !=null">
+						when user_id=#{item.userId} then #{item.createTime,jdbcType=TIMESTAMP}
+					</if>
+				</foreach>
+			</trim>
+			<trim prefix="update_time = case"  suffix="end,">
+				<foreach collection="list" item="item" index="index">
+					<if test="item.updateTime !=null">
+						when user_id=#{item.userId} then #{item.updateTime,jdbcType=TIMESTAMP}
+					</if>
+				</foreach>
+			</trim>
+		</trim>
+		where
+		<foreach collection="list" separator="or" item="item" index="index" >
+			user_id=#{item.userId}
+		</foreach>
+	</update>
+
+</mapper>
+
