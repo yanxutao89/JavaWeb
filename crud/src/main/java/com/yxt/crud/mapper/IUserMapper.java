@@ -1,6 +1,8 @@
 package com.yxt.crud.mapper;
 
+import com.yxt.crud.annotations.Converter;
 import com.yxt.crud.bean.UserPojo;
+import com.yxt.crud.interceptor.UserStatusEnum;
 
 import java.util.List;
 import java.util.Map;
@@ -12,6 +14,7 @@ import java.util.Map;
  */
 public interface IUserMapper extends IBaseMapper {
 
+	@Converter(properties = {"status"}, enums = UserStatusEnum.class)
 	List<Map> selectUsers(Map queryMap);
 
 	Integer insertUser(UserPojo userPojo);

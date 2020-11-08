@@ -52,7 +52,7 @@ public class MyResultSetHandlerInterceptor implements Interceptor {
     private static final ReflectorFactory REFLECTOR_FACTORY = new DefaultReflectorFactory();
     private static final String MAPPED_STATEMENT = "mappedStatement";
     private static final String BOUND_SQL = "boundSql";
-    private static final String REDIS_KEY = "CmpResourceMapping";
+    private static final String REDIS_KEY = "CrudMapping";
 
     @Autowired
     private RedisUtils redisUtils;

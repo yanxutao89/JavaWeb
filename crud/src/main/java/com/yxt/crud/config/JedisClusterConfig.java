@@ -26,18 +26,18 @@ import java.util.Set;
 //@Configuration
 public class JedisClusterConfig {
 
-    @Value("${redis.cluster.nodes}")
+    @Value("${spring.redis.cluster.nodes}")
     private String clusterNodes;
-    @Value("${redis.timeout}")
-    private int timeout;
-    @Value("${redis.pool.max.idle}")
-    private int maxIdle;
-    @Value("${redis.pool.max.wait}")
-    private long maxWaitMillis;
-    @Value("${redis.password}")
-    private String password;
-    @Value("${redis.node.Address}")
+    @Value("${spring.redis.node.Address}")
     private String redisNodeAddress;
+    @Value("${spring.redis.pool.max.idle}")
+    private int maxIdle;
+    @Value("${spring.redis.pool.max.wait}")
+    private long maxWaitMillis;
+    @Value("${spring.redis.timeout}")
+    private int timeout;
+    @Value("${spring.redis.password}")
+    private String password;
 
     @Bean
     public JedisPoolConfig getJedisPoolConfig() {

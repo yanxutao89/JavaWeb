@@ -46,14 +46,13 @@ public class MyApplicationRunner implements ApplicationRunner {
 //    @Value("${spring.internationalization.language}")
     private String language = "chinese";
 
-    private static final String REDIS_KEY = "CmpResourceMapping";
+    private static final String REDIS_KEY = "CrudMapping";
     private static final List<IBaseMapper> MAPPER_INSTANCES = new ArrayList<>();
     private static final Map<Integer, IBaseMapper> MAPPER_INSTANCE_MAP = new HashMap<>();
     private static final Map<String, Class> ENUM_TYPE_MAP = new HashMap<>();
 
     static {
-        ENUM_TYPE_MAP.put("StatusEnum", BaseEnum.class);
-        ENUM_TYPE_MAP.put("ImageTypeEnum", UserStatusEnum.class);
+        ENUM_TYPE_MAP.put("UserStatusEnum", UserStatusEnum.class);
     }
 
     @Override
@@ -97,7 +96,7 @@ public class MyApplicationRunner implements ApplicationRunner {
             List<KeyValuePojo> keyValuePojos = keyValueMapper.selectKeyValue(map);
             if (keyValuePojos != null && keyValuePojos.size() > 0) {
                 for (KeyValuePojo kv : keyValuePojos) {
-//                    addEnum(ENUM_TYPE_MAP.get(kv.getEnumName()), kv.getEnumName(), kv.getKey(), kv.getValue());
+                    addEnum(ENUM_TYPE_MAP.get(kv.getEnumName()), kv.getEnumName(), kv.getKey(), kv.getValue());
                 }
             }
         } catch (Exception e) {
