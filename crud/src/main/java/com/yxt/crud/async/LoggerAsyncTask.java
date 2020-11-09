@@ -2,7 +2,7 @@ package com.yxt.crud.async;
 
 import com.yxt.crud.bean.LoggerPojo;
 import com.yxt.crud.bean.Result;
-import com.yxt.crud.json.JsonObject;
+import com.yxt.crud.yanson.JsonObject;
 import com.yxt.crud.mapper.ILoggerMapper;
 import com.yxt.crud.utils.CollectionUtils;
 import com.yxt.crud.utils.Utils;

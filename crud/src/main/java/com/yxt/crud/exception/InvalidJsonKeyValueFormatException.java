@@ -1,7 +1,7 @@
 package com.yxt.crud.exception;
 
 /**
- * Exception indicating that the json is not valid
+ * Exception indicating that the yanson is not valid
  * @author yanxt7
  *
  */

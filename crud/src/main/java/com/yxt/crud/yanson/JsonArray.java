@@ -1,4 +1,4 @@
-package com.yxt.crud.json;
+package com.yxt.crud.yanson;
 
 import java.util.ArrayList;
 

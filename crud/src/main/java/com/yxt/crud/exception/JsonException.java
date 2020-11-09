@@ -1,7 +1,7 @@
 package com.yxt.crud.exception;
 
 /**
- * Base exception related to json
+ * Base exception related to yanson
  * @author yanxt7
  *
  */

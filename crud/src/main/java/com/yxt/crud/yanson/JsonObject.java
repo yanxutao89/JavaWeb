@@ -1,4 +1,4 @@
-package com.yxt.crud.json;
+package com.yxt.crud.yanson;
 
 import com.yxt.crud.exception.InvalidJsonKeyValueFormatException;
 import com.yxt.crud.utils.CollectionUtils;

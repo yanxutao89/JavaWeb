@@ -12,7 +12,7 @@ import java.util.Objects;
  */
 public class Result {
 
-	private int code;			// 状态码,200-成功,-1-失败
+	private Integer code;			// 状态码,200-成功,-1-失败
 	private String msg;			// 提示信息
 	private Object data;		// 数据
 	private List<Object> ids;	// 业务ids
@@ -22,7 +22,7 @@ public class Result {
 		this.ids = new ArrayList<>();
 	}
 
-	public Result(int code, String msg, Object data, List<Object> ids) {
+	public Result(Integer code, String msg, Object data, List<Object> ids) {
 		this.code = code;
 		this.msg = msg;
 		this.data = data;
@@ -41,7 +41,7 @@ public class Result {
 		return result;
 	}
 
-	public int getCode() {
+	public Integer getCode() {
 		return code;
 	}
 

@@ -61,7 +61,7 @@ public class TypeUtils {
 			}
 		}
 
-		throw new InvalidJsonValueFormatException(String.format("Invalid json data type, supported types are %s, but found %s ",  Arrays.toString(SUPPORTED_DATA_TYPES), jsonStr));
+		throw new InvalidJsonValueFormatException(String.format("Invalid yanson data type, supported types are %s, but found %s ",  Arrays.toString(SUPPORTED_DATA_TYPES), jsonStr));
 	}
 
 	private static Class determineType4Array(String[] strings) {

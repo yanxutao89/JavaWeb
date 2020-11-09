@@ -1,7 +1,7 @@
 package com.yxt.crud.service.impl;
 
 import com.yxt.crud.bean.UserPojo;
-import com.yxt.crud.json.JsonObject;
+import com.yxt.crud.yanson.JsonObject;
 import com.yxt.crud.mapper.IUserMapper;
 import com.yxt.crud.service.IUserService;
 import com.yxt.crud.utils.Utils;

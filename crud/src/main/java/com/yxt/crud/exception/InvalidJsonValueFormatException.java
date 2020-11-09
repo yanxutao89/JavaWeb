@@ -1,7 +1,7 @@
 package com.yxt.crud.exception;
 
 /**
- * Exception indicating that the json value is not supported
+ * Exception indicating that the yanson value is not supported
  * @author yanxt7
  *
  */
