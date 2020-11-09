@@ -1,5 +1,6 @@
 package com.yxt.crud.aspect;
 
+import com.yxt.crud.annotations.CrudLogger;
 import com.yxt.crud.async.LoggerAsyncTask;
 import com.yxt.crud.bean.Result;
 import org.aspectj.lang.JoinPoint;
@@ -10,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.lang.reflect.Method;
+
 
 /**
  * @Author: Yanxt7
@@ -18,14 +21,14 @@ import org.springframework.stereotype.Component;
  */
 @Aspect
 @Component
-public class LoggerAspect {
+public class CrudLoggerAspect {
 
-	private static final Logger logger = LoggerFactory.getLogger(LoggerAspect.class);
+	private static final Logger logger = LoggerFactory.getLogger(CrudLoggerAspect.class);
 
 	@Autowired
 	private LoggerAsyncTask loggerAsyncTask;
 
-	@Pointcut("@annotation(com.yxt.crud.annotations.Logger)")
+	@Pointcut("@annotation(com.yxt.crud.annotations.CrudLogger)")
 	private void loggerPointcut(){
 
 	}
@@ -36,9 +39,10 @@ public class LoggerAspect {
 		try {
 			loggerAsyncTask.validateRequestNo(joinPoint);
 			loggerAsyncTask.recordAtRequest(joinPoint);
-			return joinPoint.proceed();
+			Object data = joinPoint.proceed();
+			return normal(data, joinPoint);
 		} catch (Exception e) {
-			return exception(e);
+			return exception(e, joinPoint);
 		}
 	}
 
@@ -56,11 +60,33 @@ public class LoggerAspect {
 		loggerAsyncTask.recordAtResponse(joinPoint, result);
 	}
 
-	private Result exception(Exception e) {
+	private Result normal(Object data, JoinPoint joinPoint) throws NoSuchMethodException {
 		Result result = new Result();
-		result.setMsg(e.getMessage());
+		result.setCode(200);
+		CrudLogger crudLogger = getAnnotation(joinPoint);
+		result.setMsg(null == crudLogger ? "操作成功" : crudLogger.value() + "成功");
+		result.setData(data);
+		return result;
+	}
+
+	private Result exception(Exception e, JoinPoint joinPoint) throws NoSuchMethodException {
+		Result result = new Result();
+		CrudLogger crudLogger = getAnnotation(joinPoint);
+		result.setMsg(null == crudLogger ? "操作失败" : crudLogger.value() + "失败" + e.getMessage());
 		e.printStackTrace();
 		return result;
+	}
+
+	private CrudLogger getAnnotation(JoinPoint joinPoint) throws NoSuchMethodException {
+		Class<?> clazz = joinPoint.getTarget().getClass();
+		Object[] args = joinPoint.getArgs();
+		Class[] parameterTypes = new Class[args.length];
+		for (int i = 0; i < args.length; ++i) {
+			parameterTypes[i] = args[i].getClass();
+		}
+		String name = joinPoint.getSignature().getName();
+		Method method = clazz.getDeclaredMethod(name, parameterTypes);
+		return method.getAnnotation(CrudLogger.class);
 	}
 
 }

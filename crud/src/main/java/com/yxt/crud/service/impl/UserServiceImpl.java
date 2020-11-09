@@ -1,6 +1,5 @@
 package com.yxt.crud.service.impl;
 
-import com.yxt.crud.bean.Result;
 import com.yxt.crud.bean.UserPojo;
 import com.yxt.crud.json.JsonObject;
 import com.yxt.crud.mapper.IUserMapper;
@@ -24,72 +23,53 @@ public class UserServiceImpl implements IUserService {
 	private IUserMapper userMapper;
 
 	@Override
-	public Result queryUser(String jsonStr) throws Exception {
-
-		Result result = new Result();
+	public Object queryUser(String jsonStr) throws Exception {
 
 		JsonObject jsonObject = (JsonObject) JsonObject.parseObject(jsonStr);
+
 		Map queryMap = jsonObject;
 
-		result.setCode(200);
-		result.setMsg("获取成功");
-		result.setData(userMapper.selectUsers(queryMap));
-
-		return result;
+		return userMapper.selectUsers(queryMap);
 
 	}
 
 	@Override
-	public Result addUser(String jsonStr) throws Exception {
-
-		Result result = new Result();
+	public Object addUser(String jsonStr) throws Exception {
 
 		JsonObject jsonObject = (JsonObject) JsonObject.parseObject(jsonStr);
+
 		UserPojo userPojo = jsonObject.toJavaObject(jsonStr, UserPojo.class);
 		userPojo.setUserId(Utils.nextId());
 		userPojo.setCreateTime(new Date());
 
-		result.setCode(200);
-		result.setMsg("操作成功");
-		result.setData(userMapper.insertUser(userPojo));
-
-		return result;
+		return userMapper.insertUser(userPojo);
 
 	}
 
 	@Override
-	public Result modifyUser(String jsonStr) throws Exception {
+	public Object modifyUser(String jsonStr) throws Exception {
 
-		Result result = new Result();
 
 		JsonObject jsonObject = (JsonObject) JsonObject.parseObject(jsonStr);
+
 		UserPojo userPojo = jsonObject.toJavaObject(jsonStr, UserPojo.class);
 		userPojo.setUpdateTime(new Date());
 
-		result.setCode(200);
-		result.setMsg("操作成功");
-		result.setData(userMapper.updateUser(userPojo));
-
-		return result;
+		return userMapper.updateUser(userPojo);
 
 	}
 
 	@Override
-	public Result deleteUser(String jsonStr) throws Exception {
+	public Object deleteUser(String jsonStr) throws Exception {
 
-		Result result = new Result();
 
 		JsonObject jsonObject = (JsonObject) JsonObject.parseObject(jsonStr);
+
 		UserPojo userPojo = jsonObject.toJavaObject(jsonStr, UserPojo.class);
 		userPojo.setStatus(0);
 		userPojo.setUpdateTime(new Date());
 
-		result.setCode(200);
-		result.setMsg("操作成功");
-		result.setData(userMapper.updateUser(userPojo));
-
-		return result;
+		return userMapper.updateUser(userPojo);
 
 	}
-
 }

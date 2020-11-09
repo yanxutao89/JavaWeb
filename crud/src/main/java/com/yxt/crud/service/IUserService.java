@@ -9,12 +9,12 @@ import com.yxt.crud.bean.Result;
  */
 public interface IUserService {
 
-	Result queryUser(String jsonStr) throws Exception;
+	Object queryUser(String jsonStr) throws Exception;
 
-	Result addUser(String jsonStr) throws Exception;
+	Object addUser(String jsonStr) throws Exception;
 
-	Result modifyUser(String jsonStr) throws Exception;
+	Object modifyUser(String jsonStr) throws Exception;
 
-	Result deleteUser(String jsonStr) throws Exception;
+	Object deleteUser(String jsonStr) throws Exception;
 
 }
