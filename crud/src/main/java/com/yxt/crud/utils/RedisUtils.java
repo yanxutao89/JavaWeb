@@ -333,7 +333,7 @@ public final class RedisUtils {
      *
      * @param prefix 模糊删除的key，比如"zhangsan*",这时就会删除所有以zhangsan开头的key所对应的value
      */
-    public long deleteByPrex(String prefix) {
+    public long deleteByPrefix(String prefix) {
         long r = 0;
         Set<String> keys = redisTemplate.keys(prefix+"*");
         if (!CollectionUtils.isEmpty(keys)) {
