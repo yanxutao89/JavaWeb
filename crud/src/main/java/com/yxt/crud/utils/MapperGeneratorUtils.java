@@ -208,7 +208,7 @@ public class MapperGeneratorUtils {
     private String generateSelect(List<List<String>> columnList) {
 
         StringBuffer sb = new StringBuffer("\t<select id=\"select" + ENTITY + "\" parameterType=\"java.util.Map\" resultMap=\"BaseResultMap\">\n");
-        sb.append("\t\tselect\n");
+        sb.append("\t\tSELECT\n");
         for (int i = 0; i < columnList.size(); i++) {
             if (i == columnList.size() - 1) {
                 sb.append("\t\t" + columnList.get(i).get(0) + "\n");
@@ -216,8 +216,8 @@ public class MapperGeneratorUtils {
                 sb.append("\t\t" + columnList.get(i).get(0) + ",\n");
             }
         }
-        sb.append("\t\tfrom " + TABLE_NAME + "\n")
-            .append("\t\twhere 1 = 1\n")
+        sb.append("\t\tFROM " + TABLE_NAME + "\n")
+            .append("\t\tWHERE 1 = 1\n")
             .append("\t\t" + toColumnIf( columnList.get(0).get(0), "and " +  columnList.get(0).get(0) + " = ", "", columnList.get(0).get(1)).replace("},,", "}") + "\n")
             .append("\t</select>");
 
@@ -228,7 +228,7 @@ public class MapperGeneratorUtils {
     private String generateInsert(List<List<String>> columnList) {
 
         StringBuffer sb = new StringBuffer("\t<insert id=\"insert" + ENTITY + "\">\n" +
-                "\t\tinsert into "+ TABLE_NAME + "\n" +
+                "\t\tINSERT INTO "+ TABLE_NAME + "\n" +
                 "\t\t(\n");
 
         for (int i = 0; i < columnList.size(); i++) {
@@ -240,7 +240,7 @@ public class MapperGeneratorUtils {
         }
 
         sb.append("\t\t)\n")
-                .append("\t\tvalues\n")
+                .append("\t\tVALUES\n")
                 .append("\t\t(\n");
 
         for (int i = 0; i < columnList.size(); i++) {
@@ -262,7 +262,7 @@ public class MapperGeneratorUtils {
     private String generateInsertSelective(List<List<String>> columnList) {
 
         StringBuffer sb = new StringBuffer("\t<insert id=\"insert" + ENTITY + "Selective\">\n" +
-                "\t\tinsert into " + TABLE_NAME + "\n" +
+                "\t\tINSERT INTO " + TABLE_NAME + "\n" +
                 "\t\t<trim prefix=\"(\" suffix=\")\" suffixOverrides=\",\" >\n");
 
         for (int i = 0; i < columnList.size(); i++) {
@@ -271,7 +271,7 @@ public class MapperGeneratorUtils {
 
         sb.append("\t\t</trim>\n");
 
-        sb.append("\t\t<trim prefix=\"values (\" suffix=\")\" suffixOverrides=\",\" >\n");
+        sb.append("\t\t<trim prefix=\"VALUES (\" suffix=\")\" suffixOverrides=\",\" >\n");
 
         for (int i = 0; i < columnList.size(); i++) {
             sb.append("\t\t\t" + toValueIf(columnList.get(i).get(0), columnList.get(i).get(1)) + "\n");
@@ -287,7 +287,7 @@ public class MapperGeneratorUtils {
     private String generateInsertBatch(List<List<String>> columnList) {
 
         StringBuffer sb = new StringBuffer("\t<insert id=\"insert" + ENTITY + "Batch\" parameterType=\"java.util.List\">\n" +
-                "\t\tinsert into " + TABLE_NAME + "\n");
+                "\t\tINSERT INTO " + TABLE_NAME + "\n");
 
         sb.append("\t\t(\n");
         for (int i = 0; i < columnList.size(); i++) {
@@ -298,7 +298,7 @@ public class MapperGeneratorUtils {
             }
         }
         sb.append("\t\t)\n");
-        sb.append("\t\tvalues\n");
+        sb.append("\t\tVALUES\n");
         sb.append("\t\t<foreach collection=\"list\" item=\"item\" index=\"index\" separator=\",\">\n");
         sb.append("\t\t(\n");
 
@@ -322,8 +322,8 @@ public class MapperGeneratorUtils {
     private String generateUpdate(List<List<String>> columnList) {
 
         StringBuffer sb = new StringBuffer("\t<update id=\"update" + ENTITY + "\">\n" +
-                "\t\tupdate " + TABLE_NAME + "\n" +
-                "\t\tset\n");
+                "\t\tUPDATE " + TABLE_NAME + "\n" +
+                "\t\tSET\n");
 
         for (int i = 0; i < columnList.size(); i++) {
             if (i == 0) {
@@ -339,7 +339,7 @@ public class MapperGeneratorUtils {
             }
         }
 
-        sb.append("\t\twhere\n");
+        sb.append("\t\tWHERE\n");
         sb.append("\t\t\t"+ columnList.get(0).get(0) + "=" + columnToValue(columnList.get(0).get(0), columnList.get(0).get(1)).replace("},", "}") + "\n");
         sb.append("\t</update>");
 
@@ -350,7 +350,7 @@ public class MapperGeneratorUtils {
     private String generateUpdateSelective(List<List<String>> columnList) {
 
         StringBuffer sb = new StringBuffer("\t<update id=\"update" + ENTITY + "Selective\">\n" +
-                "\t\tupdate " + TABLE_NAME + "\n" +
+                "\t\tUPDATE " + TABLE_NAME + "\n" +
                 "\t\t<set>\n");
         for (int i = 0; i < columnList.size(); i++) {
             if (i == 0) {
@@ -360,7 +360,7 @@ public class MapperGeneratorUtils {
         }
 
         sb.append("\t\t</set>\n");
-        sb.append("\t\twhere\n");
+        sb.append("\t\tWHERE\n");
         sb.append("\t\t\t" + columnList.get(0).get(0) + "=" + columnToValue(columnList.get(0).get(0), columnList.get(0).get(1)).replace("},", "}") + "\n");
         sb.append("\t</update>");
 
@@ -371,21 +371,21 @@ public class MapperGeneratorUtils {
     private String generateUpdateBatch(List<List<String>> columnList, String id) {
 
         StringBuffer sb = new StringBuffer("\t<update id=\"update" + ENTITY + "Batch\" parameterType=\"java.util.List\">\n" +
-                "\t\tupdate " + TABLE_NAME + " set\n");
+                "\t\tUPDATE " + TABLE_NAME + " SET\n");
 
         for (int i = 0; i < columnList.size(); i++) {
             if (i == 0) {
                 continue;
             }
             if (i == columnList.size() - 1) {
-                sb.append("\t\t" + toForeachO2O(columnList.get(i).get(0), columnList.get(i).get(1), id, "", columnList.get(i).get(0), "end").replace("end,", "end") + "");
+                sb.append("\t\t" + toForeachO2O(columnList.get(i).get(0), columnList.get(i).get(1), id, "", columnList.get(i).get(0), "END").replace("END,", "END") + "");
             } else {
-                sb.append("\t\t" + toForeachO2O(columnList.get(i).get(0), columnList.get(i).get(1), id, "", columnList.get(i).get(0), "end") + "");
+                sb.append("\t\t" + toForeachO2O(columnList.get(i).get(0), columnList.get(i).get(1), id, "", columnList.get(i).get(0), "END") + "");
             }
         }
 
-        sb.append("\t\twhere " + id + " in\n");
-        sb.append("\t\t" + toForeachO2O(id, columnList.get(0).get(1), id, ",", "(", ")").replace("close=\"),\"", "close=\")\"").replace("when #{item.id} then ", ""));
+        sb.append("\t\tWHERE " + id + " IN\n");
+        sb.append("\t\t" + toForeachO2O(id, columnList.get(0).get(1), id, ",", "(", ")").replace("close=\"),\"", "close=\")\"").replace("WHEN #{item.id} THEN ", ""));
         sb.append("\t</update>");
 
         return sb.toString();
@@ -395,8 +395,8 @@ public class MapperGeneratorUtils {
     private String generateUpdateBatchSelective(List<List<String>> columnList, String id) {
 
     	StringBuffer sb = new StringBuffer("\t<update id=\"update" + ENTITY + "BatchSelective\" parameterType=\"java.util.List\">\n" +
-    			"\t\tupdate " + TABLE_NAME + "\n");
-    	sb.append("\t\t<trim prefix=\"set\" suffixOverrides=\",\">\n");
+    			"\t\tUPDATE " + TABLE_NAME + "\n");
+    	sb.append("\t\t<trim prefix=\"SET\" suffixOverrides=\",\">\n");
 
     	for (int i = 0; i < columnList.size(); i++) {
 
@@ -404,14 +404,14 @@ public class MapperGeneratorUtils {
     			continue;
     		}
 
-    		sb.append("\t\t\t<trim prefix=\"" + columnList.get(i).get(0) + " = case\"  suffix=\"end,\">\n");
-    		sb.append("\t\t\t\t" + toForeachO2OIf(columnList.get(i).get(0), columnList.get(i).get(1), id, "", columnList.get(i).get(0), "end") +"");
+    		sb.append("\t\t\t<trim prefix=\"" + columnList.get(i).get(0) + " = CASE\"  suffix=\"END,\">\n");
+    		sb.append("\t\t\t\t" + toForeachO2OIf(columnList.get(i).get(0), columnList.get(i).get(1), id, "", columnList.get(i).get(0), "END") +"");
     		sb.append("\t\t\t</trim>\n");
     	}
 
     	sb.append("\t\t</trim>\n");
-    	sb.append("\t\twhere\n");
-    	sb.append("\t\t<foreach collection=\"list\" separator=\"or\" item=\"item\" index=\"index\" >\n");
+    	sb.append("\t\tWHERE\n");
+    	sb.append("\t\t<foreach collection=\"list\" separator=\"OR\" item=\"item\" index=\"index\" >\n");
     	sb.append("\t\t\t" + id + underScore2Camel("=#{item." + id + "}") + "\n");
     	sb.append("\t\t</foreach>\n");
     	sb.append("\t</update>");
@@ -531,7 +531,7 @@ public class MapperGeneratorUtils {
         }
 
         sb.append("\t\t\t\tseparator=\"" + separator +  "\" open=\"" + open + "\" close=\"" + close + ",\">\n");
-        sb.append("\t\t\twhen " + "#{item." + id + "} then " + columnToValue(str, "item.", type).replace("},", "}") + "\n");
+        sb.append("\t\t\tWHEN " + "#{item." + id + "} THEN " + columnToValue(str, "item.", type).replace("},", "}") + "\n");
         sb.append("\t\t</foreach>\n");
 
         return sb.toString();
@@ -544,12 +544,12 @@ public class MapperGeneratorUtils {
     	sb.append("<foreach collection=\"list\" item=\"item\" index=\"index\">\n");
 
     	if (!open.endsWith("(")) {
-    		open = open + "=case " + id;
+    		open = open + "=CASE " + id;
     	}
 
     	sb.append("\t\t\t\t\t<if test=\"" + underScore2Camel("item." + str)  + " != null\">\n");
     	String columnToValue = columnToValue(str, "item.", type);
-    	sb.append("\t\t\t\t\t\twhen " + id + "=" + underScore2Camel("#{item." + id) + "} then " + columnToValue.substring(0, columnToValue.length() - 1) + "\n");
+    	sb.append("\t\t\t\t\t\tWHEN " + id + "=" + underScore2Camel("#{item." + id) + "} THEN " + columnToValue.substring(0, columnToValue.length() - 1) + "\n");
     	sb.append("\t\t\t\t\t</if>\n");
     	sb.append("\t\t\t\t</foreach>\n");
 
