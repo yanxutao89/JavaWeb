@@ -207,7 +207,7 @@ public class MapperGeneratorUtils {
 
     private String generateSelect(List<List<String>> columnList) {
 
-        StringBuffer sb = new StringBuffer("\t<select id=\"select" + ENTITY + "\" parameterType=\"java.util.Map\" resultMap=\"BaseResultMap\">\n");
+        StringBuffer sb = new StringBuffer("\t<select id=\"select" + ENTITY + "\" parameterType=\"java.util.Map\" resultMap=\"java.util.Map\">\n");
         sb.append("\t\tSELECT\n");
         for (int i = 0; i < columnList.size(); i++) {
             if (i == columnList.size() - 1) {
@@ -218,7 +218,7 @@ public class MapperGeneratorUtils {
         }
         sb.append("\t\tFROM " + TABLE_NAME + "\n")
             .append("\t\tWHERE 1 = 1\n")
-            .append("\t\t" + toColumnIf( columnList.get(0).get(0), "and " +  columnList.get(0).get(0) + " = ", "", columnList.get(0).get(1)).replace("},,", "}") + "\n")
+            .append("\t\t" + toColumnIf( columnList.get(0).get(0), "AND " +  columnList.get(0).get(0) + " = ", "", columnList.get(0).get(1)).replace("},,", "}") + "\n")
             .append("\t</select>");
 
         return sb.toString();
@@ -527,7 +527,7 @@ public class MapperGeneratorUtils {
         sb.append("<foreach collection=\"list\" item=\"item\" index=\"index\"\n");
 
         if (!open.endsWith("(")) {
-            open = open + "=case " + id;
+            open = open + "=CASE " + id;
         }
 
         sb.append("\t\t\t\tseparator=\"" + separator +  "\" open=\"" + open + "\" close=\"" + close + ",\">\n");
