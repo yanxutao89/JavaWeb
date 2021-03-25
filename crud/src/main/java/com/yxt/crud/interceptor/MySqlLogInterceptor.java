@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Properties;
-import java.util.regex.Pattern;
 
 
 /**
@@ -45,7 +44,7 @@ public class MySqlLogInterceptor implements Interceptor {
                 MappedStatement ms = (MappedStatement) args[0];
                 Object parameterObject = args[1];
                 BoundSql boundSql = ms.getBoundSql(parameterObject);
-                String sql = boundSql.getSql();
+                String sql = formatSql(boundSql.getSql());
                 if (parameterObject instanceof Map) {
                     Map parameterMap = (Map) parameterObject;
                     for (Object entry : parameterMap.entrySet()) {
@@ -87,9 +86,8 @@ public class MySqlLogInterceptor implements Interceptor {
         if (null == sql) {
             return "";
         }
-        Pattern blankLine = Pattern.compile("(^(\\s*)\\r\\n)*" +
-                "|(\\n\\s*\\r)*");
-        sql = blankLine.matcher(sql).replaceAll("");
+        sql = sql.replaceAll("(?m)^\\s*$" + System.lineSeparator(), "")
+            .replaceAll("(?m)^\\s*$(\\n|\\r\\n)", "");
         return sql;
     }
 
