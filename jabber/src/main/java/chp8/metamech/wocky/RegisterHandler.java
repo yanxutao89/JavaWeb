@@ -1,7 +1,7 @@
 package chp8.metamech.wocky;
 
-import chp3.metamech.jabber.xml.Packet;
-import chp3.metamech.jabber.xml.PacketListener;
+import chp8.metamech.jabber.xml.Packet;
+import chp8.metamech.jabber.xml.PacketListener;
 
 /**
  * Title:

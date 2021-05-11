@@ -6,8 +6,8 @@ import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.Iterator;
 
-import chp3.metamech.jabber.Session;
-import chp3.metamech.jabber.xml.Packet;
+import chp6.metamech.jabber.Session;
+import chp6.metamech.jabber.xml.Packet;
 
 /**
  * Title:

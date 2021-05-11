@@ -5,11 +5,11 @@ import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.Iterator;
 
-import chp2.metamech.log.Log;
-import chp3.metamech.jabber.xml.Packet;
-import chp3.metamech.jabber.Session;
-import chp3.metamech.jabber.Presence;
-import chp2.metamech.jabber.JabberID;
+import chp8.metamech.log.Log;
+import chp8.metamech.jabber.xml.Packet;
+import chp8.metamech.jabber.Session;
+import chp8.metamech.jabber.Presence;
+import chp8.metamech.jabber.JabberID;
 
 /**
  * Title:

@@ -2,11 +2,11 @@ package chp8.metamech.vorpal;
 
 import java.io.Writer;
 
-import chp3.metamech.jabber.xml.PacketListener;
-import chp3.metamech.jabber.xml.Packet;
-import chp7.metamech.jabber.Authenticator;
-import chp3.metamech.jabber.Session;
-import chp2.metamech.log.Log;
+import chp8.metamech.jabber.xml.PacketListener;
+import chp8.metamech.jabber.xml.Packet;
+import chp8.metamech.jabber.Authenticator;
+import chp8.metamech.jabber.Session;
+import chp8.metamech.log.Log;
 
 /**
  * Title:

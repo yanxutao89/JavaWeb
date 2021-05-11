@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.Hashtable;
 
-import chp2.metamech.jabber.JabberID;
-import chp3.metamech.jabber.Session;
+import chp6.metamech.jabber.JabberID;
+import chp6.metamech.jabber.Session;
 /**
  * Title:
  * Description:

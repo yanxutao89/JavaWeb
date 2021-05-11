@@ -8,8 +8,8 @@ import org.xml.sax.InputSource;
 import org.xml.sax.helpers.DefaultHandler;
 import org.apache.xerces.parsers.SAXParser;
 
-import chp2.metamech.log.Log;
-import chp3.metamech.jabber.Session;
+import chp6.metamech.log.Log;
+import chp6.metamech.jabber.Session;
 
 /** This class grabs a hold of a Jabber socket and handles incoming xml entities.
 The current iteration utilizes the standard SAX interface.

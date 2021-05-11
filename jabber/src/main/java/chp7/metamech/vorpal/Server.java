@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.ServerSocket;
 
-import com.metamech.jabber.xml.*;
+import chp7.metamech.jabber.xml.*;
 import chp7.metamech.jabber.Authenticator;
-import chp3.metamech.jabber.Session;
+import chp7.metamech.jabber.Session;
 
 /**
 The main Jabber server class.
@@ -76,6 +76,6 @@ public class Server {
     Authenticator.randomToken();
     System.out.println(" initialized.");
     System.out.println("Jabber Server -- " + SERVER_NAME + ":"+ JABBER_PORT);
-    new chp3.metamech.vorpal.Server();
+    new Server();
   }
 }

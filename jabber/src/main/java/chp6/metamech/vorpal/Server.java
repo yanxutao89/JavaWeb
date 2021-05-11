@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.ServerSocket;
 
-import com.metamech.jabber.xml.*;
-import chp3.metamech.jabber.Session;
+import chp6.metamech.jabber.xml.*;
+import chp6.metamech.jabber.Session;
 
 /**
 The main Jabber server class.
@@ -71,6 +71,6 @@ public class Server {
 
   static public void main(String [] args){
     System.out.println("Jabber Server -- " + SERVER_NAME + ":"+ JABBER_PORT);
-    new chp3.metamech.vorpal.Server();
+    new Server();
   }
 }

@@ -6,9 +6,8 @@ import java.net.Socket;
 import java.util.Hashtable;
 import java.util.Iterator;
 
-import com.metamech.jabber.*;
-import com.metamech.jabber.xml.*;
-import com.metamech.io.*;
+import chp4.metamech.jabber.*;
+import chp4.metamech.jabber.xml.*;
 
 /**
  * Title:

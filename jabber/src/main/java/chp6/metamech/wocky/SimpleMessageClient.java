@@ -1,7 +1,7 @@
 package chp6.metamech.wocky;
 
-import com.metamech.jabber.xml.*;
-import chp2.metamech.log.Log;
+import chp6.metamech.jabber.xml.*;
+import chp6.metamech.log.Log;
 /**
  * Title:
  * Description:

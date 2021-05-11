@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.ServerSocket;
 
-import com.metamech.jabber.xml.*;
 import chp3.metamech.jabber.Session;
+import chp3.metamech.jabber.xml.PacketQueue;
+import chp3.metamech.jabber.xml.ProcessThread;
+import chp3.metamech.jabber.xml.QueueThread;
 
 /**
 The main Jabber server class.

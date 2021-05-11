@@ -2,9 +2,9 @@ package chp8.metamech.wocky;
 
 import java.util.LinkedList;
 
-import com.metamech.jabber.xml.*;
-import chp7.metamech.jabber.Authenticator;
-import chp3.metamech.jabber.Session;
+import chp8.metamech.jabber.xml.*;
+import chp8.metamech.jabber.Authenticator;
+import chp8.metamech.jabber.Session;
 
 /**
  * Title:

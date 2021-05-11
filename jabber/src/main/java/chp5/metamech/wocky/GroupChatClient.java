@@ -1,6 +1,6 @@
 package chp5.metamech.wocky;
 
-import com.metamech.jabber.xml.*;
+import chp5.metamech.jabber.xml.*;
 
 /**
  * Title:

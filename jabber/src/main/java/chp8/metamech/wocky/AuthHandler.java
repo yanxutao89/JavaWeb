@@ -3,10 +3,10 @@ package chp8.metamech.wocky;
 import java.io.Writer;
 import javax.swing.JOptionPane;
 
-import chp7.metamech.jabber.Authenticator;
-import chp3.metamech.jabber.Session;
-import chp3.metamech.jabber.xml.Packet;
-import chp3.metamech.jabber.xml.PacketListener;
+import chp8.metamech.jabber.Authenticator;
+import chp8.metamech.jabber.Session;
+import chp8.metamech.jabber.xml.Packet;
+import chp8.metamech.jabber.xml.PacketListener;
 
 /**
  * Title:

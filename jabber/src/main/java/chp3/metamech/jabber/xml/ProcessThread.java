@@ -1,8 +1,8 @@
 package chp3.metamech.jabber.xml;
 
-import com.metamech.jabber.xml.*;
+import chp3.metamech.jabber.xml.*;
 import chp3.metamech.jabber.Session;
-import chp2.metamech.log.Log;
+import chp3.metamech.log.Log;
 
 public class ProcessThread extends Thread {
 

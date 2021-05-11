@@ -3,7 +3,7 @@ package chp4.metamech.jabber.xml;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import chp2.metamech.log.Log;
+import chp4.metamech.log.Log;
 /**
  * Title:
  * Description:

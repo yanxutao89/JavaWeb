@@ -27,7 +27,7 @@ public class JabberID{
     return this.domain.equalsIgnoreCase(domain);
   }
 
-  public boolean equalsDomain(chp2.metamech.jabber.JabberID testJid){
+  public boolean equalsDomain(JabberID testJid){
     return equalsDomain(testJid.domain);
   }
 
@@ -41,11 +41,11 @@ public class JabberID{
     }
     return this.user.equalsIgnoreCase(user);
   }
-  public boolean equalsUser(chp2.metamech.jabber.JabberID testJid){
+  public boolean equalsUser(JabberID testJid){
     return equalsUser(testJid.user);
   }
 
-  public boolean equalsResource(chp2.metamech.jabber.JabberID test){
+  public boolean equalsResource(JabberID test){
     return equalsResource(test.resource);
   }
 
@@ -64,12 +64,12 @@ public class JabberID{
     return equalsUser(user) && equalsResource(resource);
   }
 
-  public boolean equals(chp2.metamech.jabber.JabberID jid){
+  public boolean equals(JabberID jid){
     return equalsUser(jid) && equalsDomain(jid) && equalsResource(jid);
   }
 
   public boolean equals(String jid){
-    return equals(new chp2.metamech.jabber.JabberID(jid));
+    return equals(new JabberID(jid));
   }
 
   public void setJID(String jid){

@@ -5,7 +5,9 @@ import java.net.Socket;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
-import com.metamech.io.*;
+import chp3.metamech.io.LoggingReader;
+import chp3.metamech.io.LoggingWriter;
+import chp3.metamech.io.XercesReader;
 
 /**
 A central data structure to track information related to a single

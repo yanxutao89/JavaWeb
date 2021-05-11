@@ -2,11 +2,11 @@ package chp7.metamech.wocky;
 
 import java.io.Writer;
 
-import chp2.metamech.log.Log;
+import chp7.metamech.log.Log;
 import chp7.metamech.jabber.Authenticator;
-import chp3.metamech.jabber.Session;
-import chp3.metamech.jabber.xml.Packet;
-import chp3.metamech.jabber.xml.PacketListener;
+import chp7.metamech.jabber.Session;
+import chp7.metamech.jabber.xml.Packet;
+import chp7.metamech.jabber.xml.PacketListener;
 
 /**
  * Title:

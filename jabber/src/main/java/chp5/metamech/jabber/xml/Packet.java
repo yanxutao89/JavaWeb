@@ -10,7 +10,7 @@ import java.util.Iterator;
 
 import org.xml.sax.Attributes;
 
-import chp3.metamech.jabber.Session;
+import chp5.metamech.jabber.Session;
 
 public class Packet {
 
@@ -23,7 +23,7 @@ public class Packet {
     children.add(value);
   }
 
-  public Packet(chp3.metamech.jabber.xml.Packet parent, String element, String namespace, Attributes atts){
+  public Packet(Packet parent, String element, String namespace, Attributes atts){
     setElement(element);
     setNamespace(namespace);
     setParent(parent);
@@ -34,9 +34,9 @@ public class Packet {
     }
   }
 
-  chp3.metamech.jabber.xml.Packet parent;
-  public chp3.metamech.jabber.xml.Packet getParent()             { return parent;        }
-  public void   setParent(chp3.metamech.jabber.xml.Packet parent){
+  Packet parent;
+  public Packet getParent()             { return parent;        }
+  public void   setParent(Packet parent){
     this.parent = parent;
     if (parent != null){
       parent.children.add(this);
@@ -47,12 +47,12 @@ public class Packet {
 
   public LinkedList getChildren() {return children;}
 
-  public chp3.metamech.jabber.xml.Packet getFirstChild(String subelement){
+  public Packet getFirstChild(String subelement){
     Iterator childIterator = children.iterator();
     while (childIterator.hasNext()){
       Object child = childIterator.next();
-      if (child instanceof chp3.metamech.jabber.xml.Packet){
-        chp3.metamech.jabber.xml.Packet childPacket = (chp3.metamech.jabber.xml.Packet)child;
+      if (child instanceof Packet){
+        Packet childPacket = (Packet)child;
         if (childPacket.getElement().equals(subelement)) {
           return childPacket;
         }
@@ -62,7 +62,7 @@ public class Packet {
   }
 
   public String getChildValue(String subelement){
-    chp3.metamech.jabber.xml.Packet child = getFirstChild(subelement);
+    Packet child = getFirstChild(subelement);
     if (child == null){
       return null;
     }

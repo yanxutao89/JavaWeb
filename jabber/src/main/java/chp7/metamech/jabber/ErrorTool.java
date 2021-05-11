@@ -1,6 +1,6 @@
 package chp7.metamech.jabber;
 
-import chp3.metamech.jabber.xml.Packet;
+import chp7.metamech.jabber.xml.Packet;
 /**
  * Title:
  * Description:

@@ -3,12 +3,11 @@ package chp6.metamech.vorpal;
 import java.io.Writer;
 import java.util.Iterator;
 
-import chp3.metamech.jabber.xml.Packet;
-import chp3.metamech.jabber.xml.PacketListener;
-
-import chp3.metamech.jabber.Session;
-import chp2.metamech.jabber.JabberID;
-import chp2.metamech.log.Log;
+import chp6.metamech.jabber.xml.Packet;
+import chp6.metamech.jabber.xml.PacketListener;
+import chp6.metamech.jabber.Session;
+import chp6.metamech.jabber.JabberID;
+import chp6.metamech.log.Log;
 
 /**
  * Title:

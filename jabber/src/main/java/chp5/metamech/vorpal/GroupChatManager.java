@@ -4,9 +4,9 @@ import java.util.Hashtable;
 import java.util.Enumeration;
 import java.util.Iterator;
 
-import com.metamech.jabber.xml.*;
-import chp2.metamech.jabber.JabberID;
-import chp2.metamech.log.Log;
+import chp5.metamech.jabber.xml.*;
+import chp5.metamech.jabber.JabberID;
+import chp5.metamech.log.Log;
 
 /**
  * Title:

@@ -3,8 +3,8 @@ package chp5.metamech.vorpal;
 import java.util.Hashtable;
 import java.util.LinkedList;
 
-import chp2.metamech.jabber.JabberID;
-import chp3.metamech.jabber.Session;
+import chp5.metamech.jabber.JabberID;
+import chp5.metamech.jabber.Session;
 /**
  * Title:
  * Description:

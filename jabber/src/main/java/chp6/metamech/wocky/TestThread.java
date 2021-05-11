@@ -3,8 +3,8 @@ package chp6.metamech.wocky;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import com.metamech.jabber.xml.*;
-import chp2.metamech.log.Log;
+import chp6.metamech.jabber.xml.*;
+import chp6.metamech.log.Log;
 /**
  * Title:
  * Description:

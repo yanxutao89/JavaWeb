@@ -5,7 +5,7 @@ import java.net.*;
 
 import junit.framework.TestCase;
 
-import com.metamech.jabber.xml.*;
+import chp4.metamech.jabber.xml.*;
 
 public class ServerTest extends TestCase {
   

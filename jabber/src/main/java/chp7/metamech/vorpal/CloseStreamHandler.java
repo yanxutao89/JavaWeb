@@ -1,10 +1,9 @@
 package chp7.metamech.vorpal;
 
-import chp3.metamech.jabber.xml.Packet;
-import chp3.metamech.jabber.xml.PacketListener;
-import chp3.metamech.jabber.Session;
-
-import chp2.metamech.log.Log;
+import chp7.metamech.jabber.xml.Packet;
+import chp7.metamech.jabber.xml.PacketListener;
+import chp7.metamech.jabber.Session;
+import chp7.metamech.log.Log;
 /**
  * Title:
  * Description:

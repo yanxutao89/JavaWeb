@@ -5,8 +5,8 @@ import java.io.Writer;
 import chp3.metamech.jabber.xml.PacketListener;
 import chp3.metamech.jabber.xml.Packet;
 import chp3.metamech.jabber.Session;
-import chp2.metamech.jabber.JabberID;
-import chp2.metamech.log.Log;
+import chp3.metamech.jabber.JabberID;
+import chp3.metamech.log.Log;
 
 /**
  * Title:

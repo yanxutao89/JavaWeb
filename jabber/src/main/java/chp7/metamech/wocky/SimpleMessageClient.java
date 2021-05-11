@@ -1,9 +1,9 @@
 package chp7.metamech.wocky;
 
-import com.metamech.jabber.xml.*;
+import chp7.metamech.jabber.xml.*;
 import chp7.metamech.jabber.Authenticator;
-import chp3.metamech.jabber.Session;
-import chp2.metamech.log.Log;
+import chp7.metamech.jabber.Session;
+import chp7.metamech.log.Log;
 /**
  * Title:
  * Description:

@@ -4,9 +4,9 @@ import java.util.Hashtable;
 import java.util.Enumeration;
 import java.util.Iterator;
 
-import com.metamech.jabber.xml.*;
-import chp2.metamech.jabber.JabberID;
-import chp2.metamech.log.Log;
+import chp7.metamech.jabber.xml.*;
+import chp7.metamech.jabber.JabberID;
+import chp7.metamech.log.Log;
 
 /**
  * Title:
@@ -21,10 +21,10 @@ public class GroupChatManager {
 
   private GroupChatManager(){}
 
-  static chp5.metamech.vorpal.GroupChatManager man;
-  static public chp5.metamech.vorpal.GroupChatManager getManager(){
+  static GroupChatManager man;
+  static public GroupChatManager getManager(){
     if (man == null){
-      man = new chp5.metamech.vorpal.GroupChatManager();
+      man = new GroupChatManager();
     }
     return man;
   }
