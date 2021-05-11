@@ -1,0 +1,14 @@
+<stream:stream to="jabber.com" xmlns="jabber:client" xmlns:stream="http://etherx.jabber.com/streams">
+  <iq type="set" id="uniqueID">
+    <query xmlns="jabber:iq:testspace">
+      <field>hello field value</field>
+    </query>
+    <query xmlns="jabber:iq:testspace2">
+      <field>hello another field value</field>
+    </query>
+  </iq>
+  <iq type="get" id="uniqueID2">
+    <query xmlns="jabber:iq:time"/>
+  </iq>
+</stream:stream>
+

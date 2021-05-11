@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+
+<!-- ===================================================================== -->
+<!-- Ultra simple Ant build file                                           -->
+<!-- ===================================================================== -->
+
+<project name="build-all" default="dist" basedir=".">
+
+  <!-- A list of all child projects to build -->
+  <target name="build">
+    <ant dir="chp2"     target="${target}"/>
+    <ant dir="chp3"     target="${target}"/>
+    <ant dir="chp4"     target="${target}"/>
+    <ant dir="chp5"     target="${target}"/>
+    <ant dir="chp6"     target="${target}"/>
+    <ant dir="chp7"     target="${target}"/>
+    <ant dir="chp8"     target="${target}"/>
+  </target>
+  
+  <!-- Compile all class files but do not generate docs -->
+  <target name="compile">
+    <antcall target="build">
+      <param name="target" value="compile"/>
+    </antcall>
+  </target>
+  
+  <!-- Test all projects -->
+  <target name="test">
+    <antcall target="build">
+      <param name="target" value="test"/>
+    </antcall>
+  </target>
+  
+  <!-- Compile and generate docs for all projects -->
+  <target name="dist">
+    <antcall target="build">
+      <param name="target" value="dist"/>
+    </antcall>
+  </target>
+
+  <!-- Just generate documents for all projects -->
+  <target name="docs">
+    <antcall target="build">
+      <param name="target" value="docs"/>
+    </antcall>
+  </target>
+  
+  <!-- Remove generated class files but keep jars and docs -->
+  <target name="clean">
+    <antcall target="build">
+      <param name="target" value="clean"/>
+    </antcall>
+  </target>
+  
+  <!-- Remove all generated files -->
+  <target name="clean-all">
+    <antcall target="build">
+      <param name="target" value="clean-all"/>
+    </antcall>
+  </target>
+  
+</project>
