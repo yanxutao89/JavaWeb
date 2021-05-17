@@ -1,4 +1,4 @@
-package ch02;
+package ch02.server;
 
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFutureListener;
