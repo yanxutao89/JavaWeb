@@ -2,11 +2,11 @@ package ch02.server;
 
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFutureListener;
-import io.netty.channel.ChannelHandler;
+import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
-@ChannelHandler.Sharable
+@Sharable
 public class EchoServerHandler extends ChannelInboundHandlerAdapter {
 
     @Override
