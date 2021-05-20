@@ -31,13 +31,35 @@ public class BootstrapClient {
             .channel(NioSocketChannel.class)
             .handler(new SimpleChannelInboundHandler<ByteBuf>() {
                 @Override
+                public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
+                    super.channelRegistered(ctx);
+                    System.out.println("Channel registered");
+                }
+
+                @Override
                 protected void channelRead0(ChannelHandlerContext channelHandlerContext, ByteBuf byteBuf) throws Exception {
                     System.out.println("Received data");
                 }
-                });
-        ChannelFuture future =
-            bootstrap.connect(
-                    new InetSocketAddress("www.manning.com", 80));
+
+                @Override
+                public void channelActive(ChannelHandlerContext ctx) throws Exception {
+                    super.channelActive(ctx);
+                    System.out.println("Channel active");
+                }
+
+                @Override
+                public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
+                    super.channelUnregistered(ctx);
+                    System.out.println("Channel unregistered");
+                }
+
+                @Override
+                public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+                    super.channelInactive(ctx);
+                    System.out.println("Channel inactive");
+                }
+            });
+        ChannelFuture future = bootstrap.connect(new InetSocketAddress("www.manning.com", 80));
         future.addListener((ChannelFuture channelFuture) -> {
             if (channelFuture.isSuccess()) {
                 System.out.println("Connection established");
