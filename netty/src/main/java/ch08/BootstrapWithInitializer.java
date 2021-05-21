@@ -24,6 +24,7 @@ public class BootstrapWithInitializer {
         bootstrap.group(new NioEventLoopGroup(), new NioEventLoopGroup())
             .channel(NioServerSocketChannel.class)
             .childHandler(new ChannelInitializerImpl());
+
         ChannelFuture future = bootstrap.bind(new InetSocketAddress(8080));
         future.sync();
     }
@@ -34,7 +35,6 @@ public class BootstrapWithInitializer {
             ChannelPipeline pipeline = ch.pipeline();
             pipeline.addLast(new HttpClientCodec());
             pipeline.addLast(new HttpObjectAggregator(Integer.MAX_VALUE));
-
         }
     }
 }

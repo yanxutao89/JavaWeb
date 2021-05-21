@@ -19,27 +19,29 @@ import java.net.InetSocketAddress;
  */
 public class BootstrapClientWithOptionsAndAttrs {
 
+    public static void main(String[] args) {
+        new BootstrapClientWithOptionsAndAttrs().bootstrap();
+    }
+
     /**
      * Listing 8.7 Using attributes
      * */
     public void bootstrap() {
         final AttributeKey<Integer> id = AttributeKey.newInstance("ID");
+
         Bootstrap bootstrap = new Bootstrap();
         bootstrap.group(new NioEventLoopGroup())
             .channel(NioSocketChannel.class)
             .handler(
                 new SimpleChannelInboundHandler<ByteBuf>() {
                     @Override
-                    public void channelRegistered(ChannelHandlerContext ctx)
-                        throws Exception {
+                    public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
                         Integer idValue = ctx.channel().attr(id).get();
                         // do something with the idValue
                     }
 
                     @Override
-                    protected void channelRead0(
-                        ChannelHandlerContext channelHandlerContext,
-                        ByteBuf byteBuf) throws Exception {
+                    protected void channelRead0(ChannelHandlerContext channelHandlerContext, ByteBuf byteBuf) throws Exception {
                         System.out.println("Received data");
                     }
                 }
@@ -47,8 +49,8 @@ public class BootstrapClientWithOptionsAndAttrs {
         bootstrap.option(ChannelOption.SO_KEEPALIVE, true)
             .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 5000);
         bootstrap.attr(id, 123456);
-        ChannelFuture future = bootstrap.connect(
-            new InetSocketAddress("www.manning.com", 80));
+        ChannelFuture future = bootstrap.connect(new InetSocketAddress("www.manning.com", 80));
         future.syncUninterruptibly();
     }
+
 }
