@@ -211,9 +211,9 @@ public class MapperGeneratorUtils {
         sb.append("\t\tSELECT\n");
         for (int i = 0; i < columnList.size(); i++) {
             if (i == columnList.size() - 1) {
-                sb.append("\t\t" + columnList.get(i).get(0) + "\t\t\t\t\tAS" + underScore2Camel(columnList.get(i).get(0)) + "\n");
+                sb.append("\t\t" + columnList.get(i).get(0) + "\t\t\t\t\tAS " + underScore2Camel(columnList.get(i).get(0)) + "\n");
             } else {
-                sb.append("\t\t" + columnList.get(i).get(0) + "\t\t\t\t\tAS" + underScore2Camel(columnList.get(i).get(0)) + ",\n");
+                sb.append("\t\t" + columnList.get(i).get(0) + "\t\t\t\t\tAS " + underScore2Camel(columnList.get(i).get(0)) + ",\n");
             }
         }
         sb.append("\t\tFROM " + TABLE_NAME + "\n")
