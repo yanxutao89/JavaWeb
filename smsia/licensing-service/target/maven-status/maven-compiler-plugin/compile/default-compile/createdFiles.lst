@@ -1,8 +1,0 @@
-com\ms\config\ServiceConfig.class
-com\ms\model\License.class
-com\ms\model\Organization.class
-com\ms\service\OrganizationService.class
-com\ms\service\LicenseService.class
-com\ms\controller\LicenseServiceController.class
-com\ms\LicensingApplication.class
-com\ms\repository\LicenseRepository.class
