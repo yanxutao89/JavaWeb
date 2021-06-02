@@ -1,6 +1,6 @@
 example.property: "I AM A PROD PROPERTY OVERRIDE"
 server.port: 8090
-server.servlet.context-path: /v1/organizations
+server.servlet.context-path: /v1/licenses
 spring.jpa.database: "MYSQL"
 spring.datasource.platform:  "mysql"
 spring.jpa.show-sql: "true"
