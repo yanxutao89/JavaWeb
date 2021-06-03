@@ -8,7 +8,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name = "licenses")
+@Table(name = "smsia_licenses")
 public class License {
     @Id
     @Column(name = "license_id", nullable = false)
