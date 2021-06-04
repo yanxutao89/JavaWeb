@@ -3,6 +3,7 @@ package com.ms.controller;
 import com.ms.config.ServiceConfig;
 import com.ms.model.License;
 import com.ms.service.LicenseService;
+import com.ms.utils.UserContextHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
@@ -10,7 +11,7 @@ import org.springframework.http.HttpStatus;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/{organizationId}/licenses")
+@RequestMapping(value = "/lsc")
 public class LicenseServiceController {
     @Autowired
     private LicenseService licenseService;
@@ -18,35 +19,23 @@ public class LicenseServiceController {
     @Autowired
     private ServiceConfig serviceConfig;
 
-    @RequestMapping(value = "", method = RequestMethod.GET)
+    @RequestMapping(value = "/retrieve", method = RequestMethod.GET)
     public List<License> getLicenses(@RequestParam("organizationId") String organizationId) {
-        return licenseService.getLicensesByOrg(organizationId);
+        System.err.println(String.format("getLicenses Correlation id: %s", UserContextHolder.getContext().getCorrelationId()));
+        return licenseService.getLicensesByOrganization(organizationId);
     }
 
-    @RequestMapping(value = "/{licenseId}", method = RequestMethod.GET)
-    public License getLicenses(@RequestParam("organizationId") String organizationId,
-                               @RequestParam("licenseId") String licenseId) {
-        return licenseService.getLicense(organizationId, licenseId, "");
-    }
-
-    @RequestMapping(value = "/{licenseId}/{clientType}", method = RequestMethod.GET)
-    public License getLicensesWithClient(@RequestParam("organizationId") String organizationId,
-                                         @RequestParam("licenseId") String licenseId,
-                                         @RequestParam("clientType") String clientType) {
-        return licenseService.getLicense(organizationId, licenseId, clientType);
-    }
-
-    @RequestMapping(value = "/{licenseId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/update", method = RequestMethod.PUT)
     public void updateLicenses(@RequestParam("licenseId") String licenseId, @RequestBody License license) {
         licenseService.updateLicense(license);
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
     public void saveLicenses(@RequestBody License license) {
         licenseService.saveLicense(license);
     }
 
-    @RequestMapping(value = "/{licenseId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteLicenses(@RequestParam("licenseId") String licenseId, @RequestBody License license) {
         licenseService.deleteLicense(license);

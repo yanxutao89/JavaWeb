@@ -35,7 +35,7 @@ public class LicenseService {
     @Autowired
     OrganizationDiscoveryClient organizationDiscoveryClient;
 
-    private Organization retrieveOrgInfo(String organizationId, String clientType) {
+    private Organization retrieveOrganizationInfo(String organizationId, String clientType) {
         Organization organization = null;
 
         switch (clientType) {
@@ -59,8 +59,8 @@ public class LicenseService {
     }
 
     @HystrixCommand(
-            fallbackMethod = "buildFallbackLicenseList",
-            threadPoolKey = "licenseByOrgThreadPool",
+//            fallbackMethod = "buildFallbackLicenseList",
+            threadPoolKey = "licenseByOrganizationThreadPool",
             threadPoolProperties = {
                     @HystrixProperty(name = "coreSize", value = "30"),
                     @HystrixProperty(name = "maxQueueSize", value = "10")
@@ -74,17 +74,18 @@ public class LicenseService {
                     @HystrixProperty(name = "metrics.rollingStats.numBuckets", value = "5")
             }
     )
-    public List<License> getLicensesByOrg(String organizationId) {
-        System.out.println(String.format("getLicensesByOrg Correlation id: %s",
-                UserContextHolder.getContext().getCorrelationId()));
-        randomlyRunLong();
+    public List<License> getLicensesByOrganization(String organizationId) {
+        System.err.println(String.format("getLicensesByOrganization Correlation id: %s", UserContextHolder.getContext().getCorrelationId()));
+//        randomlyRunLong();
+        Organization organization = organizationFeignClient.getOrganization(organizationId);
+        System.out.println(organization);
         return licenseRepository.findByOrganizationId(organizationId);
     }
 
     public License getLicense(String organizationId, String licenseId, String clientType) {
         License license = licenseRepository.findByOrganizationIdAndLicenseId(organizationId, licenseId);
 
-        Organization org = retrieveOrgInfo(organizationId, clientType);
+        Organization org = retrieveOrganizationInfo(organizationId, clientType);
 
         return license
                 .withOrganizationName(org.getName())
@@ -118,7 +119,6 @@ public class LicenseService {
         fallbackList.add(license);
         return fallbackList;
     }
-
 
     private void randomlyRunLong() {
         Random random = new Random();

@@ -21,10 +21,12 @@ public class OrganizationDiscoveryClient {
         RestTemplate restTemplate = new RestTemplate();
         List<ServiceInstance> instances = discoveryClient.getInstances("organization-service");
 
-        if (instances.size()==0) return null;
-        String serviceUri = String.format("%s/v1/organizations/%s",instances.get(0).getUri().toString(), organizationId);
-    
-        ResponseEntity< Organization > restExchange =
+        if (instances.size() == 0) {
+            return null;
+        }
+        String serviceUri = String.format("%s/v1/organizations/%s", instances.get(0).getUri().toString(), organizationId);
+
+        ResponseEntity<Organization> restExchange =
                 restTemplate.exchange(
                         serviceUri,
                         HttpMethod.GET,

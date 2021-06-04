@@ -3,39 +3,36 @@ package com.ms.controller;
 
 import com.ms.model.Organization;
 import com.ms.service.OrganizationService;
+import com.ms.utils.UserContextHolder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 @RestController
-@RequestMapping(value = "")
+@RequestMapping(value = "/osc")
 public class OrganizationServiceController {
     @Autowired
-    private OrganizationService orgService;
+    private OrganizationService organizationService;
 
-    @RequestMapping(value = "/{organizationId}", method = RequestMethod.GET)
-    public Organization getOrganization(@PathVariable("organizationId") String organizationId) {
-        return orgService.getOrg(organizationId);
+    @RequestMapping(value = "/retrieve", method = RequestMethod.GET)
+    public Organization getOrganization(@RequestParam("organizationId") String organizationId) {
+        System.err.println(String.format("getOrganization Correlation id: %s", UserContextHolder.getContext().getCorrelationId()));
+        return organizationService.getOrganization(organizationId);
     }
 
-    @RequestMapping(value = "/{organizationId}", method = RequestMethod.PUT)
-    public void updateOrganization(@PathVariable("organizationId") String orgId, @RequestBody Organization org) {
-        orgService.updateOrg(org);
+    @RequestMapping(value = "/update", method = RequestMethod.PUT)
+    public void updateOrganization(@RequestParam("organizationId") String organizationId, @RequestBody Organization org) {
+        organizationService.updateOrg(org);
     }
 
-    @RequestMapping(value = "/{organizationId}", method = RequestMethod.POST)
-    public void saveOrganization(@RequestBody Organization org) {
-        orgService.saveOrg(org);
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    public void saveOrganization(@RequestParam Organization organization) {
+        organizationService.saveOrganization(organization);
     }
 
-    @RequestMapping(value = "/{organizationId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteOrganization(@PathVariable("orgId") String orgId, @RequestBody Organization org) {
-        orgService.deleteOrg(org);
+    public void deleteOrganization(@RequestParam("organizationId") String organizationId, @RequestBody Organization org) {
+        organizationService.deleteOrg(org);
     }
 }

@@ -1,5 +1,7 @@
 package com.ms.model;
 
+import java.util.Objects;
+
 public class Organization {
     String id;
     String name;
@@ -45,5 +47,29 @@ public class Organization {
 
     public void setContactPhone(String contactPhone) {
         this.contactPhone = contactPhone;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Organization that = (Organization) o;
+        return id.equals(that.id) && name.equals(that.name) && contactName.equals(that.contactName) && contactEmail.equals(that.contactEmail) && contactPhone.equals(that.contactPhone);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, contactName, contactEmail, contactPhone);
+    }
+
+    @Override
+    public String toString() {
+        return "Organization{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", contactName='" + contactName + '\'' +
+                ", contactEmail='" + contactEmail + '\'' +
+                ", contactPhone='" + contactPhone + '\'' +
+                '}';
     }
 }
