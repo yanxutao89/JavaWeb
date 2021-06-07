@@ -39,5 +39,5 @@ spring:
      config:
        server:
          native:
-           searchLocations: classpath:config/,classpath:config/licensing-service,classpath:config/organization-service
+           searchLocations: classpath:config/,classpath:config/licensing-service,classpath:config/organization-service,classpath:config/zuul-server
 #             searchLocations: file:config/licensing-service,file:config/organization-service
