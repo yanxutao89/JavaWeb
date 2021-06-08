@@ -1,6 +1,7 @@
 package com.ms.model;
 
 public class AbTestingRoute {
+
     String serviceName;
     String active;
     String endpoint;

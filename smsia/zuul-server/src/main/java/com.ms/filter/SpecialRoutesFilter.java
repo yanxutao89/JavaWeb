@@ -39,8 +39,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-@Component
+//@Component
 public class SpecialRoutesFilter extends ZuulFilter {
+
     private static final int FILTER_ORDER = 1;
     private static final boolean SHOULD_FILTER = true;
 
@@ -75,7 +76,9 @@ public class SpecialRoutesFilter extends ZuulFilter {
                     HttpMethod.GET,
                     null, AbTestingRoute.class, serviceName);
         } catch (HttpClientErrorException ex) {
-            if (ex.getStatusCode() == HttpStatus.NOT_FOUND) return null;
+            if (ex.getStatusCode() == HttpStatus.NOT_FOUND) {
+                return null;
+            }
             throw ex;
         }
         return restExchange.getBody();
@@ -83,7 +86,6 @@ public class SpecialRoutesFilter extends ZuulFilter {
 
     private String buildRouteString(String oldEndpoint, String newEndpoint, String serviceName) {
         int index = oldEndpoint.indexOf(serviceName);
-
         String strippedRoute = oldEndpoint.substring(index + serviceName.length());
         System.out.println("Target route: " + String.format("%s/%s", newEndpoint, strippedRoute));
         return String.format("%s/%s", newEndpoint, strippedRoute);
@@ -95,8 +97,7 @@ public class SpecialRoutesFilter extends ZuulFilter {
     }
 
     private HttpHost getHttpHost(URL host) {
-        HttpHost httpHost = new HttpHost(host.getHost(), host.getPort(),
-                host.getProtocol());
+        HttpHost httpHost = new HttpHost(host.getHost(), host.getPort(), host.getProtocol());
         return httpHost;
     }
 
@@ -110,18 +111,17 @@ public class SpecialRoutesFilter extends ZuulFilter {
         return list.toArray(new BasicHeader[0]);
     }
 
-    private HttpResponse forwardRequest(HttpClient httpclient, HttpHost httpHost,
-                                        HttpRequest httpRequest) throws IOException {
+    private HttpResponse forwardRequest(HttpClient httpclient, HttpHost httpHost, HttpRequest httpRequest) throws IOException {
         return httpclient.execute(httpHost, httpRequest);
     }
 
 
     private MultiValueMap<String, String> revertHeaders(Header[] headers) {
-        MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
+        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
         for (Header header : headers) {
             String name = header.getName();
             if (!map.containsKey(name)) {
-                map.put(name, new ArrayList<String>());
+                map.put(name, new ArrayList<>());
             }
             map.get(name).add(header.getValue());
         }
@@ -191,11 +191,15 @@ public class SpecialRoutesFilter extends ZuulFilter {
     public boolean useSpecialRoute(AbTestingRoute testRoute) {
         Random random = new Random();
 
-        if (testRoute.getActive().equals("N")) return false;
+        if (testRoute.getActive().equals("N")) {
+            return false;
+        }
 
         int value = random.nextInt((10 - 1) + 1) + 1;
 
-        if (testRoute.getWeight() < value) return true;
+        if (testRoute.getWeight() < value) {
+            return true;
+        }
 
         return false;
     }

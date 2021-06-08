@@ -29,7 +29,7 @@ public class FilterUtils {
         ctx.addZuulRequestHeader(CORRELATION_ID, correlationId);
     }
 
-    public final String getOrgId() {
+    public final String getOrganizationId() {
         RequestContext ctx = RequestContext.getCurrentContext();
         if (ctx.getRequest().getHeader(ORG_ID) != null) {
             return ctx.getRequest().getHeader(ORG_ID);
@@ -38,7 +38,7 @@ public class FilterUtils {
         }
     }
 
-    public void setOrgId(String orgId) {
+    public void setOrganizationId(String orgId) {
         RequestContext ctx = RequestContext.getCurrentContext();
         ctx.addZuulRequestHeader(ORG_ID, orgId);
     }
@@ -66,7 +66,9 @@ public class FilterUtils {
         RequestContext ctx = RequestContext.getCurrentContext();
 
         //We might not have a service id if we are using a static, non-eureka route.
-        if (ctx.get("serviceId") == null) return "";
+        if (ctx.get("serviceId") == null) {
+            return "";
+        }
         return ctx.get("serviceId").toString();
     }
 }

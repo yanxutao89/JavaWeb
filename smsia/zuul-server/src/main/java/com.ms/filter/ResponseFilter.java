@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ResponseFilter extends ZuulFilter {
+
     private static final int FILTER_ORDER = 1;
     private static final boolean SHOULD_FILTER = true;
     private static final Logger logger = LoggerFactory.getLogger(ResponseFilter.class);
@@ -38,7 +39,6 @@ public class ResponseFilter extends ZuulFilter {
 
         logger.debug("Adding the correlation id to the outbound headers. {}", filterUtils.getCorrelationId());
         ctx.getResponse().addHeader(FilterUtils.CORRELATION_ID, filterUtils.getCorrelationId());
-
         logger.debug("Completing outgoing request for {}.", ctx.getRequest().getRequestURI());
 
         return null;
