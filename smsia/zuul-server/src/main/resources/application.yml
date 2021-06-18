@@ -1,8 +1,8 @@
 #Setting logging levels
 logging:
     level:
-      com.netflix: WARN
-      org.springframework.web: WARN
+      com.netflix: DEBUG
+      org.springframework.web: DEBUG
       com.thoughtmechanix: DEBUG
 
 eureka:
@@ -21,8 +21,20 @@ zuul:
     organization-service: /organization/**
     licensing-service: /licensing/**
 
+
 management:
   endpoints:
     web:
       exposure:
         include: routes
+
+ribbon:
+  eureka:
+    enabled: false
+
+organization-service:
+  ribbon:
+    listOfServers: localhost:8091
+licensing-service:
+  ribbon:
+    listOfServers: localhost:8090
