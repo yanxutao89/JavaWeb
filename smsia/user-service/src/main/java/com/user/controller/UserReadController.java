@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping(value = "/urc")
+@RequestMapping("/retrieve")
 public class UserReadController {
 
     private UserReadService userReadService;
@@ -15,7 +15,7 @@ public class UserReadController {
         this.userReadService = userReadService;
     }
 
-    @RequestMapping(value = "/retrieve/user/list", method = RequestMethod.GET)
+    @RequestMapping(value = "/userList", method = RequestMethod.GET)
     public Object getUserList() {
         return userReadService.getUserList("");
     }
