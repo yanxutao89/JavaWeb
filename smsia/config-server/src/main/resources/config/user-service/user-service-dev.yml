@@ -1,6 +1,6 @@
 example.property: "I AM A DEV PROPERTY OVERRIDE"
 server.port: 8090
-server.servlet.context-path: /v1/licenses
+server.servlet.context-path: /v1/user
 spring.jpa.database: "MYSQL"
 spring.datasource.platform:  "mysql"
 spring.jpa.show-sql: "true"

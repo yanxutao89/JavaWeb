@@ -1,5 +1,5 @@
 example.property: "I AM A PROD PROPERTY OVERRIDE"
-server.port: 55555
+server.port: 5555
 spring.jpa.database: "MYSQL"
 spring.datasource.platform:  "mysql"
 spring.jpa.show-sql: "true"

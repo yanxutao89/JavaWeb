@@ -1,6 +1,6 @@
 example.property: "I AM IN THE DEFAULT"
 server.port: 8091
-server.servlet.context-path: /v1/organizations
+server.servlet.context-path: /v1/order
 spring.jpa.database: "MYSQL"
 spring.datasource.platform:  "mysql"
 spring.jpa.show-sql: "true"
