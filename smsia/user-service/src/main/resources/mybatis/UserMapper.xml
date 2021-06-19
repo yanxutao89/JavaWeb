@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.user.dao.UserDao">
+
+	<select id="selectUserList" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+		u.user_id					AS userId,
+		u.user_name					AS userName,
+		u.password					AS password,
+		u.status					AS status,
+		u.create_time				AS createTime,
+		u.update_time				AS updateTime
+		FROM user					u
+		WHERE u.status > 0
+		<if test="userId != null" >AND u.user_id = #{userId,jdbcType=BIGINT}</if>
+	</select>
+
+</mapper>
+

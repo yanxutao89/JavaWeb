@@ -5,9 +5,9 @@
     <packaging>pom</packaging>
     <modules>
         <module>config-server</module>
-        <module>licensing-service</module>
+        <module>user-service</module>
         <module>eureka-server</module>
-        <module>organization-service</module>
+        <module>order-service</module>
         <module>zuul-server</module>
     </modules>
     <parent>
