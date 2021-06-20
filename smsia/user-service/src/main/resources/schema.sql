@@ -1,4 +1,4 @@
-CREATE TABLE `user` (
+CREATE TABLE `ms_user` (
     `user_id` bigint(20) NOT NULL COMMENT '用户ID',
     `user_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '用户名称',
     `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '用户密码',

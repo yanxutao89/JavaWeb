@@ -11,7 +11,7 @@
 		u.status					AS status,
 		u.create_time				AS createTime,
 		u.update_time				AS updateTime
-		FROM user					u
+		FROM ms_user					u
 		WHERE u.status > 0
 		<if test="userId != null" >AND u.user_id = #{userId,jdbcType=BIGINT}</if>
 	</select>

@@ -6,7 +6,7 @@
 	<select id="selectOrderList" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT
 		o.order_id					AS orderId
-		FROM `order`					o
+		FROM ms_order					o
 		WHERE 1 = 1
 		<if test="orderId != null" >AND o.order_id = #{orderId,jdbcType=BIGINT}</if>
 	</select>
