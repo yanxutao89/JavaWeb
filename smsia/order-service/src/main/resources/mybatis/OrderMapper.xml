@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.order.dao.OrderDao">
+
+	<select id="selectOrderList" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+		o.order_id					AS orderId
+		FROM `order`					o
+		WHERE 1 = 1
+		<if test="orderId != null" >AND o.order_id = #{orderId,jdbcType=BIGINT}</if>
+	</select>
+
+</mapper>
+
