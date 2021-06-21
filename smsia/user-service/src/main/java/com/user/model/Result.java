@@ -8,15 +8,15 @@ import java.io.Serializable;
  * @Date: 2021/6/20 10:16
  */
 public class Result implements Serializable {
-    private int code = -1;
+    private Integer code = -1;
     private String msg;
     private Object data;
 
-    public int getCode() {
+    public Integer getCode() {
         return code;
     }
 
-    public Result setCode(int code) {
+    public Result setCode(Integer code) {
         this.code = code;
         return this;
     }

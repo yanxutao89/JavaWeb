@@ -16,5 +16,25 @@
 		<if test="userId != null" >AND u.user_id = #{userId,jdbcType=BIGINT}</if>
 	</select>
 
+	<insert id="insertUser" parameterType="com.user.model.UserPojo">
+		INSERT INTO ms_user
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="userId != null" >user_id,</if>
+			<if test="userName != null" >user_name,</if>
+			<if test="password != null" >password,</if>
+			<if test="status != null" >status,</if>
+			<if test="createTime != null" >create_time,</if>
+			<if test="updateTime != null" >update_time,</if>
+		</trim>
+		<trim prefix="VALUES (" suffix=")" suffixOverrides="," >
+			<if test="userId != null" >#{userId,jdbcType=BIGINT},</if>
+			<if test="userName != null" >#{userName,jdbcType=VARCHAR},</if>
+			<if test="password != null" >#{password,jdbcType=VARCHAR},</if>
+			<if test="status != null" >#{status,jdbcType=INTEGER},</if>
+			<if test="createTime != null" >#{createTime,jdbcType=TIMESTAMP},</if>
+			<if test="updateTime != null" >#{updateTime,jdbcType=TIMESTAMP},</if>
+		</trim>
+	</insert>
+
 </mapper>
 

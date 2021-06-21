@@ -11,4 +11,6 @@ public interface UserService {
 
     Result getUserList(String str);
 
+    Result createUser(String str);
+
 }

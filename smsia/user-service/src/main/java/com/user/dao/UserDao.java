@@ -1,5 +1,7 @@
 package com.user.dao;
 
+import com.user.model.UserPojo;
+
 import java.util.List;
 import java.util.Map;
 
@@ -11,5 +13,7 @@ import java.util.Map;
 public interface UserDao {
 
     List<Map> selectUserList(Map map);
+
+    Integer insertUser(UserPojo record);
 
 }

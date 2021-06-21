@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.user.dao.LoggerDao">
+
+	<select id="selectLogger" parameterType="java.util.Map" resultType="com.user.model.LoggerPojo">
+		SELECT
+		logger_id			as loggerId,
+		request_no			as requestNo,
+		request_md5			as requestMd5,
+		request_time		as requestTime,
+		request_params		as requestParams,
+		response_time		as responseTime,
+		response_params		as responseParams,
+		rtt					as rtt
+		FROM ms_logger
+		WHERE 1 = 1
+		<if test="loggerId != null" >AND logger_id = #{loggerId,jdbcType=BIGINT}</if>
+		<if test="requestNo != null" >AND request_no = #{requestNo,jdbcType=BIGINT}</if>
+		<if test="requestMd5 != null" >AND request_md5 = #{requestMd5,jdbcType=BIGINT}</if>
+	</select>
+
+	<select id="hasRequestNo" parameterType="java.lang.Long" resultType="java.lang.Integer">
+		SELECT 1 FROM ms_logger WHERE request_no = #{requestNo,jdbcType=BIGINT} limit 0, 1
+	</select>
+
+	<insert id="insertLogger" parameterType="com.user.model.LoggerPojo">
+		INSERT INTO ms_logger
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="loggerId != null" >logger_id,</if>
+			<if test="requestNo != null" >request_no,</if>
+			<if test="requestMd5 != null" >request_md5,</if>
+			<if test="requestTime != null" >request_time,</if>
+			<if test="requestParams != null" >request_params,</if>
+			<if test="responseTime != null" >response_time,</if>
+			<if test="responseParams != null" >response_params,</if>
+			<if test="rtt != null" >rtt,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="loggerId != null" >#{loggerId,jdbcType=BIGINT},</if>
+			<if test="requestNo != null" >#{requestNo,jdbcType=BIGINT},</if>
+			<if test="requestMd5 != null" >#{requestMd5,jdbcType=VARCHAR},</if>
+			<if test="requestTime != null" >#{requestTime,jdbcType=TIMESTAMP},</if>
+			<if test="requestParams != null" >#{requestParams,jdbcType=VARCHAR},</if>
+			<if test="responseTime != null" >#{responseTime,jdbcType=TIMESTAMP},</if>
+			<if test="responseParams != null" >#{responseParams,jdbcType=VARCHAR},</if>
+			<if test="rtt != null" >#{rtt,jdbcType=BIGINT},</if>
+		</trim>
+	</insert>
+
+	<insert id="insertLoggerBatch" parameterType="java.util.List">
+		INSERT INTO ms_logger
+		(
+			logger_id,
+			request_no,
+			request_md5,
+			request_time,
+			request_params,
+			response_time,
+			response_params,
+			rtt
+		)
+		VALUES
+		<foreach collection="list" item="item" index="index" separator=",">
+		(
+			#{loggerId,jdbcType=BIGINT},
+			#{requestNo,jdbcType=BIGINT},
+			#{requestMd5,jdbcType=VARCHAR},
+			#{requestTime,jdbcType=TIMESTAMP},
+			#{requestParams,jdbcType=VARCHAR},
+			#{responseTime,jdbcType=TIMESTAMP},
+			#{responseParams,jdbcType=VARCHAR},
+			#{rtt,jdbcType=BIGINT}
+		)
+		</foreach>
+	</insert>
+
+	<update id="updateLogger" parameterType="com.user.model.LoggerPojo">
+		UPDATE ms_logger
+		<set>
+			<if test="requestNo != null" >request_no=#{requestNo,jdbcType=BIGINT},</if>
+			<if test="requestMd5 != null" >request_md5=#{requestMd5,jdbcType=VARCHAR},</if>
+			<if test="requestTime != null" >request_time=#{requestTime,jdbcType=TIMESTAMP},</if>
+			<if test="requestParams != null" >request_params=#{requestParams,jdbcType=VARCHAR},</if>
+			<if test="responseTime != null" >response_time=#{responseTime,jdbcType=TIMESTAMP},</if>
+			<if test="responseParams != null" >response_params=#{responseParams,jdbcType=VARCHAR},</if>
+			<if test="rtt != null" >rtt=#{rtt,jdbcType=BIGINT},</if>
+		</set>
+		WHERE
+		logger_id=#{loggerId,jdbcType=BIGINT}
+	</update>
+
+	<update id="updateLoggerBatch" parameterType="java.util.List">
+		UPDATE ms_logger
+		<trim prefix="SET" suffixOverrides=",">
+			<trim prefix="request_no = CASE"  suffix="END,">
+				<foreach collection="list" item="item" index="index">
+					<if test="item.requestNo != null">
+						WHEN logger_id=#{item.loggerId} THEN #{item.requestNo,jdbcType=BIGINT}
+					</if>
+				</foreach>
+			</trim>
+			<trim prefix="request_md5 = CASE"  suffix="END,">
+				<foreach collection="list" item="item" index="index">
+					<if test="item.requestMd5 != null">
+						WHEN logger_id=#{item.loggerId} THEN #{item.requestMd5,jdbcType=VARCHAR}
+					</if>
+				</foreach>
+			</trim>
+			<trim prefix="request_time = CASE"  suffix="END,">
+				<foreach collection="list" item="item" index="index">
+					<if test="item.requestTime != null">
+						WHEN logger_id=#{item.loggerId} THEN #{item.requestTime,jdbcType=TIMESTAMP}
+					</if>
+				</foreach>
+			</trim>
+			<trim prefix="request_params = CASE"  suffix="END,">
+				<foreach collection="list" item="item" index="index">
+					<if test="item.requestParams != null">
+						WHEN logger_id=#{item.loggerId} THEN #{item.requestParams,jdbcType=VARCHAR}
+					</if>
+				</foreach>
+			</trim>
+			<trim prefix="response_time = CASE"  suffix="END,">
+				<foreach collection="list" item="item" index="index">
+					<if test="item.responseTime != null">
+						WHEN logger_id=#{item.loggerId} THEN #{item.responseTime,jdbcType=TIMESTAMP}
+					</if>
+				</foreach>
+			</trim>
+			<trim prefix="response_params = CASE"  suffix="END,">
+				<foreach collection="list" item="item" index="index">
+					<if test="item.responseParams != null">
+						WHEN logger_id=#{item.loggerId} THEN #{item.responseParams,jdbcType=VARCHAR}
+					</if>
+				</foreach>
+			</trim>
+			<trim prefix="rtt = CASE"  suffix="END,">
+				<foreach collection="list" item="item" index="index">
+					<if test="item.rtt != null">
+						WHEN logger_id=#{item.loggerId} THEN #{item.rtt,jdbcType=BIGINT}
+					</if>
+				</foreach>
+			</trim>
+		</trim>
+		WHERE
+		<foreach collection="list" separator="OR" item="item" index="index" >
+			logger_id=#{item.loggerId}
+		</foreach>
+	</update>
+
+</mapper>
+
