@@ -38,6 +38,16 @@ spring:
   cloud:
      config:
        server:
+         bootstrap: true
          native:
            searchLocations: classpath:config/,classpath:config/user-service,classpath:config/order-service,classpath:config/zuul-server
 #             searchLocations: file:config/licensing-service,file:config/organization-service
+
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
