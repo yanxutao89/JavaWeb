@@ -18,8 +18,13 @@ public class OrderController {
     }
 
     @RequestMapping(value = "/retrieve/orderList", method = RequestMethod.GET)
-    public Result getOrganization() {
-        return orderService.getOrderList("");
+    public Result getOrderList(@RequestBody String str) {
+        return orderService.getOrderList(str);
+    }
+
+    @RequestMapping(value = "/create/order", method = RequestMethod.POST)
+    public Result createOrder(@RequestBody String str) {
+        return orderService.createOrder(str);
     }
 
 }

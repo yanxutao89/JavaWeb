@@ -38,4 +38,13 @@ public class Result implements Serializable {
         this.data = data;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "Result{" +
+                "code=" + code +
+                ", msg='" + msg + '\'' +
+                ", data=" + data +
+                '}';
+    }
 }

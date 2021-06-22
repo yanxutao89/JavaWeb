@@ -1,5 +1,7 @@
 package com.order.dao;
 
+import com.order.model.OrderPojo;
+
 import java.util.List;
 import java.util.Map;
 
@@ -11,5 +13,7 @@ import java.util.Map;
 public interface OrderDao {
 
     List<Map> selectOrderList(Map map);
+
+    Integer insertOrder(OrderPojo record);
 
 }

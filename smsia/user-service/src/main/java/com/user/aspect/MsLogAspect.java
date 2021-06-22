@@ -6,12 +6,14 @@ import com.user.model.Result;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
 
 
 /**
@@ -22,8 +24,7 @@ import java.lang.reflect.Method;
 @Aspect
 @Component
 public class MsLogAspect {
-
-	private static final Logger logger = LoggerFactory.getLogger(MsLogAspect.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(MsLogAspect.class);
 
 	private LoggerAsyncTask loggerAsyncTask;
 	@Autowired
@@ -38,26 +39,31 @@ public class MsLogAspect {
 
 	@Around(value = "msLogPointcut()")
 	public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
-		logger.info("around");
+		Object result;
+		MsLog msLog = getAnnotation(joinPoint);
 		try {
 			loggerAsyncTask.validateRequestNo(joinPoint);
 			loggerAsyncTask.recordAtRequest(joinPoint);
-			Object data = joinPoint.proceed();
-			return normal(data, joinPoint);
+			Object[] args = joinPoint.getArgs();
+			LOGGER.info("{}请求参数{}", msLog.value(), Arrays.toString(args));
+			Object data = joinPoint.proceed(args);
+			result = normal(data, joinPoint);
+			LOGGER.info("{}返回参数{}", msLog.value(), result);
 		} catch (Exception e) {
-			return exception(e, joinPoint);
+			result = exception(e, joinPoint);
+			LOGGER.error("{}返回参数{}", msLog.value(), result);
 		}
+
+		return result;
 	}
 
 	@AfterReturning(value = "msLogPointcut()", returning = "result")
 	public void afterReturning(JoinPoint joinPoint, Result result){
-		logger.info("afterReturning");
 		loggerAsyncTask.recordAtResponse(joinPoint, result);
 	}
 
 	@AfterThrowing(value = "msLogPointcut()", argNames = "joinPoint, exception", throwing = "exception")
 	public void afterThrowing(JoinPoint joinPoint, Exception exception){
-		logger.info("afterThrowing");
 		Result result = new Result();
 		result.setMsg(exception.toString());
 		loggerAsyncTask.recordAtResponse(joinPoint, result);
@@ -67,7 +73,8 @@ public class MsLogAspect {
 		Result result;
 		if (data instanceof Result) {
 			result = (Result) data;
-		} else {
+		}
+		else {
 			result = new Result();
 		}
 		result.setCode(null == result.getCode() ? 200 : result.getCode());
@@ -86,6 +93,12 @@ public class MsLogAspect {
 	}
 
 	private MsLog getAnnotation(JoinPoint joinPoint) throws NoSuchMethodException {
+		MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+		Method method = signature.getMethod();
+		return method.getAnnotation(MsLog.class);
+	}
+
+	private MsLog getAnnotation2(JoinPoint joinPoint) throws NoSuchMethodException {
 		Class<?> clazz = joinPoint.getTarget().getClass();
 		Object[] args = joinPoint.getArgs();
 		Class[] parameterTypes = new Class[args.length];
@@ -96,5 +109,4 @@ public class MsLogAspect {
 		Method method = clazz.getDeclaredMethod(name, parameterTypes);
 		return method.getAnnotation(MsLog.class);
 	}
-
 }

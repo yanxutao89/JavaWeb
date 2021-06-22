@@ -31,7 +31,7 @@ public class MapperGeneratorUtils {
 
     private static final String HEADER_CONTENT = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
             "<!DOCTYPE mapper PUBLIC \"-//mybatis.org//DTD Mapper 3.0//EN\" \"http://mybatis.org/dtd/mybatis-3-mapper.dtd\">";
-    private static final String ENTITY = "User";
+    private static final String ENTITY = "Order";
     private static final String FILENAME = ENTITY + "Mapper";
     private static final String NAMESPACE = "com.yxt.crud.mapper." + FILENAME;
     private static final String ENTITY_TYPE = "com.yxt.curd.bean." + ENTITY;
@@ -39,7 +39,7 @@ public class MapperGeneratorUtils {
 //    private static final String URL = "jdbc:mysql://192.168.159.128:3306/java_web?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "yxt123";
-    private static final String TABLE_NAME = "ms_user";
+    private static final String TABLE_NAME = "ms_order";
 	private static final List<List<String>> ENTITY_FIELDS = new ArrayList<>();
 
     public static void main(String[] args){

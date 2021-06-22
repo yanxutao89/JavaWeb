@@ -5,11 +5,30 @@
 
 	<select id="selectOrderList" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT
-		o.order_id					AS orderId
+		o.order_id						AS orderId,
+		o.status						AS status,
+		o.create_time					AS createTime,
+		o.status						AS updateTime
 		FROM ms_order					o
-		WHERE 1 = 1
-		<if test="orderId != null" >AND o.order_id = #{orderId,jdbcType=BIGINT}</if>
+		WHERE o.status > 0
+		<if test="orderId != null and orderId != ''">AND o.order_id = #{orderId,jdbcType=BIGINT}</if>
 	</select>
+
+	<insert id="insertOrder" parameterType="com.order.model.OrderPojo">
+		INSERT INTO ms_order
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="orderId != null" >order_id,</if>
+			<if test="status != null" >status,</if>
+			<if test="createTime != null" >create_time,</if>
+			<if test="updateTime != null" >update_time,</if>
+		</trim>
+		<trim prefix="VALUES (" suffix=")" suffixOverrides="," >
+			<if test="orderId != null" >#{orderId,jdbcType=BIGINT},</if>
+			<if test="status != null" >#{status,jdbcType=INTEGER},</if>
+			<if test="createTime != null" >#{createTime,jdbcType=TIMESTAMP},</if>
+			<if test="updateTime != null" >#{updateTime,jdbcType=TIMESTAMP},</if>
+		</trim>
+	</insert>
 
 </mapper>
 

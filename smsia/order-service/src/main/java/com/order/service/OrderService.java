@@ -12,4 +12,6 @@ public interface OrderService {
 
     Result getOrderList(String str);
 
+    Result createOrder(String str);
+
 }

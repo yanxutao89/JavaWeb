@@ -19,7 +19,7 @@ import java.util.Properties;
  * @Desc:
  * @Date: 2020/8/27 22:13
  */
-@Component
+//@Component
 @Intercepts(value = {
         @Signature(type = Executor.class,
                 method = "update",

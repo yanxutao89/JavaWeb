@@ -25,7 +25,6 @@ import java.util.Map;
  */
 @Component
 public class LoggerAsyncTask {
-
 	private LoggerDao loggerDao;
 	@Autowired
 	public void setLoggerDao(LoggerDao loggerDao) {
@@ -79,5 +78,4 @@ public class LoggerAsyncTask {
 		}
 		return new LoggerPojo();
 	}
-
 }
