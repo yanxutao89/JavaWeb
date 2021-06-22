@@ -18,8 +18,8 @@ zuul:
   ignored-services: '*'
   prefix: /api
   routes:
-    organization-service: /user/**
-    licensing-service: /order/**
+    user-service: /user/**
+    order-service: /order/**
 
 management:
   endpoints:
@@ -31,9 +31,10 @@ ribbon:
   eureka:
     enabled: false
 
-organization-service:
-  ribbon:
-    listOfServers: localhost:8091
-licensing-service:
+user-service:
   ribbon:
     listOfServers: localhost:8090
+order-service:
+  ribbon:
+    listOfServers: localhost:8091
+

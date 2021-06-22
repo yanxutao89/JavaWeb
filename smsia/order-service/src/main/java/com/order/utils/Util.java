@@ -13,7 +13,7 @@ public final class Util {
     private static final AtomicLong SEQUENCE = new AtomicLong(0L);
     private static final int SEQUENCE_COUNT = 4;
 
-    public synchronized static Long nextId() {
+    public static Long nextId() {
         long time = System.nanoTime();
         String sequence = String.valueOf(SEQUENCE.incrementAndGet());
         int length = sequence.length();
@@ -23,11 +23,11 @@ public final class Util {
             for (int i = 0; i < SEQUENCE_COUNT - length; ++i) {
                 sb.append(0);
             }
+            sb.append(sequence);
         }
         else {
            sb.append(sequence, 0, SEQUENCE_COUNT);
         }
-        sb.append(sequence);
         return Long.parseLong(sb.toString());
     }
 
