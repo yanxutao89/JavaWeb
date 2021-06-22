@@ -11,7 +11,6 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import yanson.json.Json;
-import yanson.json.JsonObject;
 import yanson.utils.CollectionUtils;
 
 import java.util.Date;
@@ -27,42 +26,36 @@ import java.util.Map;
 @Component
 public class LoggerAsyncTask {
 
-	@Autowired
 	private LoggerDao loggerDao;
+	@Autowired
+	public void setLoggerDao(LoggerDao loggerDao) {
+		this.loggerDao = loggerDao;
+	}
 
 	public void validateRequestNo(JoinPoint joinPoint) throws Exception {
-
-		JsonObject jsonObject = getJsonObject(joinPoint);
-		if (jsonObject.containsKey("requestNo")) {
-//			Long requestNo = (Long) jsonObject.get("requestNo"); todo string -> long
-			Long requestNo = Long.parseLong(jsonObject.get("requestNo").toString());
+		LoggerPojo loggerPojo = getLoggerPojo(joinPoint);
+		if (null != loggerPojo.getRequestNo()) {
+			Long requestNo = loggerPojo.getRequestNo();
 			Assert.isTrue(null == loggerDao.hasRequestNo(requestNo), String.format("Parameter 'requestNo' of %s has existed", requestNo));
-		} else {
+		}
+		else {
 			throw new Exception("Parameter 'requestNo' is required to proceed");
 		}
-
 	}
 
 	@Async("asyncExecutor")
 	public void recordAtRequest(JoinPoint joinPoint) {
-
-		JsonObject jsonObject = getJsonObject(joinPoint);
-
-		LoggerPojo loggerPojo = new LoggerPojo();
+		LoggerPojo loggerPojo = getLoggerPojo(joinPoint);
 		loggerPojo.setLoggerId(Util.nextId());
-//		loggerPojo.setRequestNo((Long) jsonObject.get("requestNo")); todo string -> long
-		loggerPojo.setRequestNo(Long.parseLong(jsonObject.get("requestNo").toString()));
-		loggerPojo.setRequestMd5(Util.getMd5(jsonObject.toString()));
 		loggerPojo.setRequestTime(new Date());
+		loggerPojo.setRequestMd5(Util.getMd5(loggerPojo.toString()));
 		Assert.isTrue(1 == loggerDao.insertLogger(loggerPojo), "Failed to insert logger");
 	}
 
 	@Async("asyncExecutor")
 	public void recordAtResponse(JoinPoint joinPoint, Result result){
-
-		JsonObject jsonObject = getJsonObject(joinPoint);
-//		Long requestNo = (Long) jsonObject.get("requestNo"); todo string -> long
-		Long requestNo = Long.parseLong(jsonObject.get("requestNo").toString());
+		LoggerPojo loggerPojo = getLoggerPojo(joinPoint);
+		Long requestNo = loggerPojo.getRequestNo();
 
 		if (null != requestNo) {
 			Map queryMap = new HashMap<>();
@@ -70,21 +63,21 @@ public class LoggerAsyncTask {
 			List<LoggerPojo> loggerPojos = loggerDao.selectLogger(queryMap);
 
 			if (!CollectionUtils.isEmpty(loggerPojos)) {
-				LoggerPojo loggerPojo = loggerPojos.get(0);
-				loggerPojo.setResponseTime(new Date());
-				loggerPojo.setResponseParams(result.toString());
-				loggerPojo.setRtt(loggerPojo.getResponseTime().getTime() - loggerPojo.getRequestTime().getTime());
-				Assert.isTrue(1 == loggerDao.updateLogger(loggerPojo), "Failed to update logger");
+				LoggerPojo logger = loggerPojos.get(0);
+				logger.setResponseTime(new Date());
+				logger.setResponseParams(result.toString());
+				logger.setRtt(logger.getResponseTime().getTime() - logger.getRequestTime().getTime());
+				Assert.isTrue(1 == loggerDao.updateLogger(logger), "Failed to update logger");
 			}
 		}
 	}
 
-	private JsonObject getJsonObject(JoinPoint joinPoint) {
+	private LoggerPojo getLoggerPojo(JoinPoint joinPoint) {
 		Object[] args = joinPoint.getArgs();
 		if (!CollectionUtils.isEmpty(args)) {
-			return Json.parseObject((String) args[0]);
+			return Json.parseObject((String) args[0]).toJavaObject(LoggerPojo.class);
 		}
-		return new JsonObject();
+		return new LoggerPojo();
 	}
 
 }

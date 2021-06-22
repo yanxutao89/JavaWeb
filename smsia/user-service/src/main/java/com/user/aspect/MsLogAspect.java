@@ -25,15 +25,18 @@ public class MsLogAspect {
 
 	private static final Logger logger = LoggerFactory.getLogger(MsLogAspect.class);
 
-	@Autowired
 	private LoggerAsyncTask loggerAsyncTask;
+	@Autowired
+	public void setLoggerAsyncTask(LoggerAsyncTask loggerAsyncTask) {
+		this.loggerAsyncTask = loggerAsyncTask;
+	}
 
 	@Pointcut("@annotation(com.user.annotations.MsLog)")
-	private void loggerPointcut(){
+	private void msLogPointcut(){
 
 	}
 
-	@Around(value = "loggerPointcut()")
+	@Around(value = "msLogPointcut()")
 	public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
 		logger.info("around");
 		try {
@@ -46,13 +49,13 @@ public class MsLogAspect {
 		}
 	}
 
-	@AfterReturning(value = "loggerPointcut()", returning = "result")
+	@AfterReturning(value = "msLogPointcut()", returning = "result")
 	public void afterReturning(JoinPoint joinPoint, Result result){
 		logger.info("afterReturning");
 		loggerAsyncTask.recordAtResponse(joinPoint, result);
 	}
 
-	@AfterThrowing(value = "loggerPointcut()", argNames = "joinPoint, exception", throwing = "exception")
+	@AfterThrowing(value = "msLogPointcut()", argNames = "joinPoint, exception", throwing = "exception")
 	public void afterThrowing(JoinPoint joinPoint, Exception exception){
 		logger.info("afterThrowing");
 		Result result = new Result();

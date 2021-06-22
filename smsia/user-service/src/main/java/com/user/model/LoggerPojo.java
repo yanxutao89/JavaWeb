@@ -9,7 +9,6 @@ import java.util.Objects;
  * @Date: 2020/11/06 15:53
  */
 public class LoggerPojo {
-
 	private Long loggerId;				// 日志ID
 	private Long requestNo;				// 请求编号
 	private String requestMd5;			// 请求Md5
