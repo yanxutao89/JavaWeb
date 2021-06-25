@@ -5,6 +5,7 @@ import com.order.dao.OrderDao;
 import com.order.model.OrderPojo;
 import com.order.model.Result;
 import com.order.service.OrderService;
+import com.order.utils.UserContextHolder;
 import com.order.utils.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Result getOrderList(String str) {
+        System.err.println(UserContextHolder.getContext().getCorrelationId());
         Result result = new Result();
         JsonObject getMap = Json.parseObject(str);
         List<Map> orderList = orderDao.selectOrderList(getMap);

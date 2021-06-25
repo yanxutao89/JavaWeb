@@ -16,10 +16,9 @@ eureka:
 
 zuul:
   ignored-services: '*'
-  prefix: /api
   routes:
-    user-service: /user/**
-    order-service: /order/**
+    user-service: /users/**
+    order-service: /orders/**
 
 management:
   endpoints:
@@ -34,7 +33,11 @@ ribbon:
 user-service:
   ribbon:
     listOfServers: localhost:8090
+    ConnectTimeout: 10000
+    ReadTimeout: 10000
 order-service:
   ribbon:
     listOfServers: localhost:8091
+    ConnectTimeout: 20000
+    ReadTimeout: 20000
 

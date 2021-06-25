@@ -9,9 +9,7 @@ import com.order.model.Result;
  * @Date: 2021/6/19 17:22
  */
 public interface OrderService {
-
     Result getOrderList(String str);
 
     Result createOrder(String str);
-
 }

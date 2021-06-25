@@ -10,21 +10,19 @@ import org.springframework.http.HttpStatus;
 
 @RestController
 public class OrderController {
-
     private OrderService orderService;
     @Autowired
     public void setOrderService(OrderService orderService) {
         this.orderService = orderService;
     }
 
-    @RequestMapping(value = "/retrieve/orderList", method = RequestMethod.GET)
+    @RequestMapping(value = "/retrieve/list", method = RequestMethod.GET)
     public Result getOrderList(@RequestBody String str) {
         return orderService.getOrderList(str);
     }
 
-    @RequestMapping(value = "/create/order", method = RequestMethod.POST)
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
     public Result createOrder(@RequestBody String str) {
         return orderService.createOrder(str);
     }
-
 }

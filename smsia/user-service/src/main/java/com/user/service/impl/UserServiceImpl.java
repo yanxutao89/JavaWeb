@@ -1,9 +1,11 @@
 package com.user.service.impl;
 
+import com.user.client.OrderServiceClient;
 import com.user.dao.UserDao;
 import com.user.model.Result;
 import com.user.model.UserPojo;
 import com.user.service.UserService;
+import com.user.utils.UserContextHolder;
 import com.user.utils.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,12 +30,21 @@ public class UserServiceImpl implements UserService {
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
     }
+    private OrderServiceClient orderServiceClient;
+    @Autowired
+    public void setOrderServiceClient(OrderServiceClient orderServiceClient) {
+        this.orderServiceClient = orderServiceClient;
+    }
 
     @Override
     public Result getUserList(String str) {
+        System.err.println(UserContextHolder.getContext().getCorrelationId());
         Result result = new Result();
         JsonObject getMap = Json.parseObject(str);
         List<Map> userList = userDao.selectUserList(getMap);
+        Result orderList = orderServiceClient.getOrderService(str);
+        Object data = orderList.getData();
+        userList.addAll((List)data);
         return result.setCode(200).setMsg("获取成功").setData(userList);
     }
 

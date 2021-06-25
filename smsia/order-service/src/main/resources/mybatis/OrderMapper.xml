@@ -12,6 +12,7 @@
 		FROM ms_order					o
 		WHERE o.status > 0
 		<if test="orderId != null and orderId != ''">AND o.order_id = #{orderId,jdbcType=BIGINT}</if>
+		LIMIT 0, 100
 	</select>
 
 	<insert id="insertOrder" parameterType="com.order.model.OrderPojo">

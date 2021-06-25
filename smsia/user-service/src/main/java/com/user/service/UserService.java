@@ -8,9 +8,7 @@ import com.user.model.Result;
  * @Date: 2021/6/19 17:22
  */
 public interface UserService {
-
     Result getUserList(String str);
 
     Result createUser(String str);
-
 }
