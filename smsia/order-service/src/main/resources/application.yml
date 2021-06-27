@@ -11,3 +11,9 @@ mybatis:
   config-location: classpath:mybatis.xml
   mapper-locations: classpath:mybatis/*Mapper.xml
 
+#Setting logging levels
+logging:
+  level:
+    com.netflix: DEBUG
+    org.springframework.web: DEBUG
+

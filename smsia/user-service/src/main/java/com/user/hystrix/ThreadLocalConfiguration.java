@@ -13,8 +13,11 @@ import javax.annotation.PostConstruct;
 
 @Configuration
 public class ThreadLocalConfiguration {
-    @Autowired(required = false)
     private HystrixConcurrencyStrategy existingConcurrencyStrategy;
+    @Autowired(required = false)
+    public void setExistingConcurrencyStrategy(HystrixConcurrencyStrategy existingConcurrencyStrategy) {
+        this.existingConcurrencyStrategy = existingConcurrencyStrategy;
+    }
 
     @PostConstruct
     public void init() {

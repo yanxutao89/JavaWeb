@@ -27,16 +27,13 @@ import java.util.Map;
  */
 @Service
 public class UserServiceImpl implements UserService {
-
     private UserDao userDao;
-
     @Autowired
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
     }
 
     private OrderServiceClient orderServiceClient;
-
     @Autowired
     public void setOrderServiceClient(OrderServiceClient orderServiceClient) {
         this.orderServiceClient = orderServiceClient;
@@ -44,7 +41,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @HystrixCommand(
-            fallbackMethod = "buildFallbackUserList",
+//            fallbackMethod = "buildFallbackUserList",
             threadPoolKey = "asyncExecutor",
             commandProperties = {
                     @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value = "10"),

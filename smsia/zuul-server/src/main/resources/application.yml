@@ -3,7 +3,6 @@ logging:
     level:
       com.netflix: DEBUG
       org.springframework.web: DEBUG
-      com.thoughtmechanix: DEBUG
 
 eureka:
   instance:
