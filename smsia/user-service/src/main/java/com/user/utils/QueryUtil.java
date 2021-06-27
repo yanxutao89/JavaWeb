@@ -18,7 +18,6 @@ import java.util.concurrent.TimeoutException;
  */
 @Component
 public class QueryUtil {
-
 	public static Map<String, Object> getResultMap(QueryTask... queryTasks) throws InterruptedException, ExecutionException, TimeoutException {
 
 		int taskCount = queryTasks.length;

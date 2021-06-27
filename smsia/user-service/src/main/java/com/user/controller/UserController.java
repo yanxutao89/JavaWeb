@@ -17,7 +17,7 @@ public class UserController {
     }
 
     @MsLog("获取用户列表")
-    @RequestMapping(value = "/retrieve/list", method = RequestMethod.GET)
+    @RequestMapping(value = "/retrieve/list", method = RequestMethod.POST)
     public Result getUserList(@RequestBody String str) {
         return userService.getUserList(str);
     }

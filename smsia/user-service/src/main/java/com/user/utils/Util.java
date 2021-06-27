@@ -8,7 +8,6 @@ import java.security.MessageDigest;
  * @Date: 2021/6/19 17:37
  */
 public final class Util {
-
     public static Long nextId() {
         return System.nanoTime();
     }
@@ -23,7 +22,7 @@ public final class Util {
             int j = md.length;
             char str[] = new char[j * 2];
             int k = 0;
-            for (int i = 0; i < j; i++) {
+            for (int i = 0; i < j; ++i) {
                 byte byte0 = md[i];
                 str[k++] = hexDigits[byte0 >>> 4 & 0xf];
                 str[k++] = hexDigits[byte0 & 0xf];
@@ -34,5 +33,4 @@ public final class Util {
             return null;
         }
     }
-
 }

@@ -32,7 +32,6 @@ import java.util.Properties;
                 method = "query",
                 args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class})})
 public class MySqlLogger implements Interceptor {
-
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
 
@@ -97,5 +96,4 @@ public class MySqlLogger implements Interceptor {
         }
         return o;
     }
-
 }

@@ -9,7 +9,6 @@ import java.util.concurrent.atomic.AtomicLong;
  * @Date: 2021/6/19 17:37
  */
 public final class Util {
-
     private static final AtomicLong SEQUENCE = new AtomicLong(0L);
     private static final int SEQUENCE_COUNT = 4;
 
@@ -52,5 +51,4 @@ public final class Util {
             return null;
         }
     }
-
 }

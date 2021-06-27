@@ -1,5 +1,7 @@
 package com.user.service.impl;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import com.user.client.OrderServiceClient;
 import com.user.dao.UserDao;
 import com.user.model.Result;
@@ -13,6 +15,7 @@ import org.springframework.util.Assert;
 import yanson.json.Json;
 import yanson.json.JsonObject;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -26,17 +29,30 @@ import java.util.Map;
 public class UserServiceImpl implements UserService {
 
     private UserDao userDao;
+
     @Autowired
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
     }
+
     private OrderServiceClient orderServiceClient;
+
     @Autowired
     public void setOrderServiceClient(OrderServiceClient orderServiceClient) {
         this.orderServiceClient = orderServiceClient;
     }
 
     @Override
+    @HystrixCommand(
+            fallbackMethod = "buildFallbackUserList",
+            threadPoolKey = "asyncExecutor",
+            commandProperties = {
+                    @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value = "10"),
+                    @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage", value = "75"),
+                    @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "7000"),
+                    @HystrixProperty(name = "metrics.rollingStats.timeInMilliseconds", value = "15000"),
+                    @HystrixProperty(name = "metrics.rollingStats.numBuckets", value = "5")
+            })
     public Result getUserList(String str) {
         System.err.println(UserContextHolder.getContext().getCorrelationId());
         Result result = new Result();
@@ -44,8 +60,12 @@ public class UserServiceImpl implements UserService {
         List<Map> userList = userDao.selectUserList(getMap);
         Result orderList = orderServiceClient.getOrderService(str);
         Object data = orderList.getData();
-        userList.addAll((List)data);
+        userList.addAll((List) data);
         return result.setCode(200).setMsg("获取成功").setData(userList);
+    }
+
+    private Result buildFallbackUserList(String str) {
+        return new Result().setCode(200).setMsg("获取成功").setData(Collections.emptyList());
     }
 
     @Override

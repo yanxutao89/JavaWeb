@@ -15,7 +15,7 @@ import java.io.IOException;
 
 @Component
 public class UserContextFilter implements Filter {
-    private static final Logger logger = LoggerFactory.getLogger(UserContextFilter.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserContextFilter.class);
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
@@ -25,8 +25,8 @@ public class UserContextFilter implements Filter {
         UserContextHolder.getContext().setUserId(httpServletRequest.getHeader(UserContext.USER_ID));
         UserContextHolder.getContext().setAuthToken(httpServletRequest.getHeader(UserContext.AUTH_TOKEN));
         UserContextHolder.getContext().setOrgId(httpServletRequest.getHeader(UserContext.ORG_ID));
+        LOGGER.debug("User-Service Incoming Correlation id: {}", UserContextHolder.getContext().getCorrelationId());
 
-        logger.debug("Organization Service Incoming Correlation id: {}", UserContextHolder.getContext().getCorrelationId());
         filterChain.doFilter(httpServletRequest, servletResponse);
     }
 

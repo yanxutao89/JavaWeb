@@ -16,7 +16,7 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    @RequestMapping(value = "/retrieve/list", method = RequestMethod.GET)
+    @RequestMapping(value = "/retrieve/list", method = RequestMethod.POST)
     public Result getOrderList(@RequestBody String str) {
         return orderService.getOrderList(str);
     }

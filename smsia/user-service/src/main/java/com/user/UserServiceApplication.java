@@ -16,7 +16,7 @@ import org.springframework.web.client.RestTemplate;
 @EnableFeignClients
 @MapperScan("com.user.dao")
 @EnableDiscoveryClient
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"com.user"})
 public class UserServiceApplication {
 
     @Bean
