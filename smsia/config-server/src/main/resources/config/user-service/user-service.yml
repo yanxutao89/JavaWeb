@@ -14,3 +14,9 @@ spring.jpa.properties.hibernate.dialect: "org.hibernate.dialect.MySQL8Dialect"
 redis.server: "redis"
 redis.port: "6379"
 signing.key: "345345fsdfsf5345"
+rocketmq.name-server: 127.0.0.1:9876
+rocketmq.producer.enable: true
+rocketmq.producer.group: user-producer-group
+rocketmq.producer.topic: user-producer-topic
+rocketmq.consumer.group: user-consumer-group
+rocketmq.consumer.topic: user-consumer-topic
