@@ -1,6 +1,7 @@
 package com.user.utils;
 
 import java.security.MessageDigest;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * @Author: Yanxt7
@@ -8,8 +9,25 @@ import java.security.MessageDigest;
  * @Date: 2021/6/19 17:37
  */
 public final class Util {
+    private static final AtomicLong SEQUENCE = new AtomicLong(0L);
+    private static final int SEQUENCE_COUNT = 4;
+
     public static Long nextId() {
-        return System.nanoTime();
+        long time = System.nanoTime();
+        String sequence = String.valueOf(SEQUENCE.incrementAndGet());
+        int length = sequence.length();
+        StringBuilder sb = new StringBuilder();
+        sb.append(time);
+        if (length < SEQUENCE_COUNT) {
+            for (int i = 0; i < SEQUENCE_COUNT - length; ++i) {
+                sb.append(0);
+            }
+            sb.append(sequence);
+        }
+        else {
+           sb.append(sequence, 0, SEQUENCE_COUNT);
+        }
+        return Long.parseLong(sb.toString());
     }
 
     public static String getMd5(String s) {
@@ -22,7 +40,7 @@ public final class Util {
             int j = md.length;
             char str[] = new char[j * 2];
             int k = 0;
-            for (int i = 0; i < j; ++i) {
+            for (int i = 0; i < j; i++) {
                 byte byte0 = md[i];
                 str[k++] = hexDigits[byte0 >>> 4 & 0xf];
                 str[k++] = hexDigits[byte0 & 0xf];

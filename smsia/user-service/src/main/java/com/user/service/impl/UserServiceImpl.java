@@ -28,12 +28,14 @@ import java.util.Map;
 @Service
 public class UserServiceImpl implements UserService {
     private UserDao userDao;
+
     @Autowired
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
     }
 
     private OrderServiceClient orderServiceClient;
+
     @Autowired
     public void setOrderServiceClient(OrderServiceClient orderServiceClient) {
         this.orderServiceClient = orderServiceClient;
@@ -43,7 +45,13 @@ public class UserServiceImpl implements UserService {
     @HystrixCommand(
 //            fallbackMethod = "buildFallbackUserList",
             threadPoolKey = "asyncExecutor",
+//            threadPoolProperties = {
+//                    @HystrixProperty(name = "coreSize", value = "30"),
+//                    @HystrixProperty(name = "maxQueueSize", value = "10"),
+//            },
             commandProperties = {
+                    @HystrixProperty(name = "execution.isolation.strategy", value = "THREAD"),
+                    @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "5000"),
                     @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value = "10"),
                     @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage", value = "75"),
                     @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "7000"),
